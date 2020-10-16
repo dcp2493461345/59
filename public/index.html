@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>59担保网</title>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <script>
+    // cookie 存储
+    (function cookies(root) {
+      function getCookie(cname, defaultValue) {
+        var value = new RegExp('(^|;| )' + cname + '=([^;]*?)(;|$)', 'g').exec(document.cookie);
+        console.log('value:', value);
+        if (!value) return defaultValue;
+        return value[2];
+      }
+      function setCookie(cname, cvalue, day, path) {
+        day = day || 1;
+        path = path || '/';
+        var date = new Date();
+        date.setTime(date.getTime() + day * 24 * 60 * 60 * 1000);
+        document.cookie = cname + '=' + cvalue + '; expires=' + date.toGMTString() + '; path=' + path + '; ';
+      }
+      function deleteCookie(cname) {
+        setCookie(cname, null, -1);
+      }
+      root.Util = {
+        getCookie: getCookie,
+        setCookie: setCookie,
+        deleteCookie: deleteCookie,
+      }
+    })(window);
+  </script>
+</body>
+
+</html>

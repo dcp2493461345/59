@@ -1,0 +1,106 @@
+/* code style*/
+/* @charset "utf-8"; */
+/*reset style*/
+html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img {margin: 0;padding: 0} */
+fieldset,img {border: 0;vertical-align: middle;}
+ ul,ol {list-style: none}
+/* body{font-family: "微软雅黑","SimHei"; font-size: 14px; color:#666; } */
+a{text-decoration: none;color:#333;}
+h1,h2,h3,h4,h5,h6{ font-size:100%;}
+
+/*common style*/
+/*通栏*/
+.container-fluid{ width:100%; min-width: 1330px;}
+/*版心*/
+.container{ width:  1330px;  margin:0 auto; }
+/*border*/
+.bd{ border:1px solid red; box-sizing: border-box;}
+.bdnone{ border:none !important;}
+
+/*float*/
+.fl{ float: left; }
+.fr{ float: right; }
+.clearfix:after{
+    content: ""; height:0; line-height: 0; visibility: hidden; display: block; clear: both;
+}
+/*bg-color*/
+.bg000{ background-color: #000; }
+.bgfff{ background-color: #fff; }
+.bgf60{ background-color: #f60 !important; }
+.bgccc{ background-color: #ccc !important; }
+
+/* color*/
+.cf60{ color: #f60 ;}
+.cccc{ color: #ccc;}
+.c6c{ color: #6c6c6c;}
+.cfff{ color: #fff !important;}
+.cf4290d{color:#f4290d;}
+
+
+
+/*text-align*/
+.textcenter{ text-align: center}
+
+/*margin*/
+.ml36{ margin-left:36px;}
+.mt14{ margin-top:14px;}
+.mb20{ margin-bottom:20px;}
+.mt30{ margin-top:30px;}
+
+
+/*padding*/
+.pt10{ padding-top:10px;}
+.pl10{ padding-left:10px !important;}
+.pl200{ padding-left:200px;}
+.ptb10{ padding:10px 0}
+
+
+/*font*/
+.font18{ font-size: 18px}
+.font12{ font-size: 12px}
+.font20{ font-size: 20px}
+.bold{ font-weight: bold;}
+
+
+
+/*line-height*/
+.lh28{ line-height: 28px;}
+
+/*position*/
+.pr{ position: relative}
+
+/*隐藏显示*/
+.block{ display: block!important;}
+.none{ display: none!important;}
+
+
+/*header style*/
+header{ height: 112px;}
+header .shopcar,header .myorder{width:100px; height:36px; background-color:#ccc; line-height: 36px; color:#808080}
+
+header .nav li{float: left; font-size:16px; font-weight: bold; margin-right:30px;}
+
+header .logo{ position: absolute; top:-28px;}
+header .logo img{ height:112px; width:200px;}
+
+
+/*title*/
+.title{ border-bottom:6px solid #f60; line-height: 40px; padding-left:10px; }
+.title h2{ font-size:20px;}
+
+
+/*proTitle*/
+.proTitle{ border-bottom:6px solid #f60;}
+.proTitle h2 { font-weight: 500;}
+.proTitle h2 span{ 
+	display: inline-block; width:40px; height:40px; background:#f60; color:#fff; font-size:20px;
+	line-height: 40px; text-align: center;
+}
+
+
+/*搜索框*/
+ .searchBox{ width:440px; height:36px; border: solid 2px #ff6600; box-sizing: border-box}
+ .searchBox input[type="text"]{ width: 386px; border:none; outline: none; height:30px;text-indent: 8px}
+ .searchBox input[type="submit"]{
+    width: 50px;border:none; height:100%;
+}
