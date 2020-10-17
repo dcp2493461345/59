@@ -93,7 +93,10 @@
                         <p class="c1">{{item.name}}</p>
                         <p class="c2">¥{{item.price}}</p>
                       </div>
-                      <div class="c9">查看详情</div>
+                      <div class="c9"
+                           @click="xiangqing(item)">
+                        <router-link to="/onlinetrading/details5">查看详情</router-link>
+                      </div>
                     </div>
                     <div class="list_two">
                       <p class="list01">
@@ -269,14 +272,17 @@ export default {
       this.price = v
       this.getList()
     },
-   formateDate(datetime) {
+    formateDate (datetime) {
       // let  = "2019-11-06T16:00:00.000Z"
-        function addDateZero(num) {
-            return (num < 10 ? "0" + num : num);
-        }
-        let d = new Date(datetime);
-        let formatdatetime = d.getFullYear() + '-' + addDateZero(d.getMonth() + 1) + '-' + addDateZero(d.getDate());
-        return formatdatetime;
+      function addDateZero (num) {
+        return (num < 10 ? "0" + num : num);
+      }
+      let d = new Date(datetime);
+      let formatdatetime = d.getFullYear() + '-' + addDateZero(d.getMonth() + 1) + '-' + addDateZero(d.getDate());
+      return formatdatetime;
+    },
+    xiangqing (item) {
+      window.sessionStorage.setItem("particul5", JSON.stringify(item))
     },
   }
 }
@@ -437,6 +443,12 @@ export default {
               // background: linear-gradient(0deg, #ff8b45, #ff684a);
               border-radius: 10px;
               cursor: pointer;
+              a {
+                display: block;
+                width: 140px;
+                line-height: 50px;
+                color: #ff7f5a;
+              }
             }
             .c9:hover {
               width: 140px;
@@ -448,6 +460,9 @@ export default {
               border: 1px solid #ff7f5a;
               background: linear-gradient(0deg, #ff8b45, #ff684a);
               border-radius: 10px;
+              a {
+                color: #ffffff;
+              }
             }
           }
           .list_two {

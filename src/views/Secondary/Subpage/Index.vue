@@ -39,8 +39,9 @@
                           style="color:#3CBE0F;">在售</span>
                     <p class="c8">发布人：{{item.issue}}</p>
                   </div>
-                  <div class="c9">
-                    <router-link to="/details">查看详情</router-link>
+                  <div class="c9"
+                       @click="xiangqing(item)">
+                    <router-link to="/subpage/details1">查看详情</router-link>
                   </div>
                 </li>
               </ul>
@@ -172,6 +173,9 @@ export default {
       this.tabedata = data.data
       this.count = data.total_count
     },
+    xiangqing (item) {
+      window.sessionStorage.setItem("particul1", JSON.stringify(item))
+    }
   }
 }
 </script>

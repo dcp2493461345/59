@@ -235,9 +235,34 @@ const routes = [
     component: () => import('../views/Boking.vue')
   },
   {
-    path: '/details',
+    path: '/consignment/details',
     name: 'Details',
     component: () => import('../views/Details.vue')
+  },
+  {
+    path: '/subpage/details1',
+    name: 'Details1',
+    component: () => import('../views/Details1.vue')
+  },
+  {
+    path: '/newmedia/details2',
+    name: 'Details2',
+    component: () => import('../views/Details2.vue')
+  },
+  {
+    path: '/trading/details3',
+    name: 'Details3',
+    component: () => import('../views/Details3.vue')
+  },
+  {
+    path: '/domainname/details4',
+    name: 'Details4',
+    component: () => import('../views/Details4.vue')
+  },
+  {
+    path: '/onlinetrading/details5',
+    name: 'Details5',
+    component: () => import('../views/Details5.vue')
   },
 ]
 

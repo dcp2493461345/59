@@ -135,7 +135,7 @@
                   </div>
                   <div class="c9"
                        @click="xiangqing(item)">
-                    <router-link to="/details">查看详情</router-link>
+                    <router-link to="/consignment/details">查看详情</router-link>
                   </div>
                 </li>
               </ul>

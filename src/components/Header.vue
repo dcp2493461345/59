@@ -36,22 +36,22 @@
           <li>
             <router-link to="/">首页</router-link>
           </li>
-          <li :class="{active001:$route.path=='/consignment'}">
+          <li :class="{active001:$route.path.indexOf('/consignment')>-1}">
             <router-link to="/consignment">网站寄售</router-link>
           </li>
-          <li :class="{active001:$route.path=='/subpage'}">
+          <li :class="{active001:$route.path.indexOf('/subpage')>-1}">
             <router-link to="/subpage">任务大厅</router-link>
           </li>
-          <li :class="{active001:$route.path=='/newmedia'}">
+          <li :class="{active001:$route.path.indexOf('/newmedia')>-1}">
             <router-link to="/newmedia">新媒体</router-link>
           </li>
-          <li :class="{active001:$route.path=='/trading'}">
+          <li :class="{active001:$route.path.indexOf('/trading')>-1}">
             <router-link to="/trading">APP交易</router-link>
           </li>
-          <li :class="{active001:$route.path=='/domainname'}">
+          <li :class="{active001:$route.path.indexOf('/domainname')>-1}">
             <router-link to="/domainname">域名交易</router-link>
           </li>
-          <li :class="{active001:$route.path=='/onlinetrading'}">
+          <li :class="{active001:$route.path.indexOf('/onlinetrading')>-1}">
             <router-link to="/onlinetrading">网点交易</router-link>
           </li>
           <li :class="{active001:$route.path=='/latestnews'}">

@@ -77,7 +77,10 @@
                       <p class="c1">{{item.name}}</p>
                       <p class="c2">¥{{item.price}}</p>
                     </div>
-                    <div class="c9">查看详情</div>
+                    <div class="c9"
+                         @click="xiangqing(item)">
+                      <router-link to="/newmedia/details2">查看详情</router-link>
+                    </div>
                   </div>
                   <div class="list_two">
                     <p class="list01">
@@ -279,6 +282,9 @@ export default {
       this.tabedata = data.data
       this.count = data.total_count
     },
+    xiangqing (item) {
+      window.sessionStorage.setItem("particul2", JSON.stringify(item))
+    },
   }
 }
 </script>
@@ -426,6 +432,12 @@ export default {
               // background: linear-gradient(0deg, #ff8b45, #ff684a);
               border-radius: 10px;
               cursor: pointer;
+              a {
+                display: block;
+                width: 140px;
+                line-height: 50px;
+                color: #ff7f5a;
+              }
             }
             .c9:hover {
               width: 140px;
@@ -437,6 +449,9 @@ export default {
               border: 1px solid #ff7f5a;
               background: linear-gradient(0deg, #ff8b45, #ff684a);
               border-radius: 10px;
+              a {
+                color: #ffffff;
+              }
             }
           }
           .list_two {
