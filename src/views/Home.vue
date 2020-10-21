@@ -560,25 +560,44 @@
                    label-width="144px">
 
             <el-form-item label="标题 ：">
-              <el-input v-model="form.name"
+              <el-input v-model="form.title"
                         placeholder="交易标题">></el-input>
+              <span class="tishiy"
+                    v-if="showts1"
+                    style="color:red;">请输入标题</span>
             </el-form-item>
             <el-form-item label="交易内容 ：">
               <el-input type="textarea"
-                        v-model="form.desc"
+                        v-model="form.content"
                         placeholder="请简要说明交易的内容"></el-input>
+              <span class="tishiy1"
+                    v-if="showts2"
+                    style="color:red;">请输入交易内容</span>
             </el-form-item>
             <el-form-item label="价格 ：">
-              <el-input v-model="form.name"
-                        placeholder="请输入您的交易价格">></el-input>
+              <el-input v-model="form.price"
+                        placeholder="请输入您的交易价格"></el-input>
+              <span class="tishiy"
+                    v-if="showts3"
+                    style="color:red;">请输入交易价格</span>
+
             </el-form-item>
             <el-form-item label="买家联系方式 ：">
-              <el-input v-model="form.name"
+              <el-input v-model="form.buyer_contact"
                         placeholder="请输入买家的QQ或微信号">></el-input>
+              <span class="tishiy"
+                    v-if="showts4"
+                    style="color:red;">请输入买家联系方式</span>
             </el-form-item>
             <el-form-item label="卖家联系方式 ：">
-              <el-input v-model="form.name"
-                        placeholder="请输入卖家的QQ或微信号">></el-input>
+              <el-input v-model="form.seller_contact"
+                        placeholder="请输入卖家的QQ或微信号"></el-input>
+              <span class="tishiy"
+                    v-if="showts5"
+                    style="color:red;">请输入卖家联系方式</span>
+              <span class="tishiy"
+                    v-if="showts6"
+                    style="color:red;">买家，卖家联系方式不能相同</span>
             </el-form-item>
             <el-form-item label="卖家联系方式 ："
                           class="thtone">
@@ -590,10 +609,15 @@
                     :class="{activeboking:flag==2}">我是买家</span>
             </el-form-item>
             <el-form-item>
-              <el-checkbox v-model="checked">我已经阅读并同意
+              <el-checkbox v-model="checked">
+                <span style="color:#333">我已经阅读并同意</span>
                 <span style="color:#0196F6">《59danbao.cn服务协议》</span>
+
               </el-checkbox>
             </el-form-item>
+            <span class="tishiyu"
+                  v-if="showts"
+                  style="color:red;">请先阅读并同意服务协议</span>
             <el-form-item>
               <span class="btn"
                     @click="onSubmit">提交</span>
@@ -601,9 +625,9 @@
           </el-form>
         </div>
         <div class="right-ewm">
-          <div class="right_01">
+          <!-- <div class="right_01">
 
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -614,7 +638,7 @@
 
 <script>
 import local from "@/utils/local";
-import { Getcategory, Getad } from "@/api/account.js"
+import { Getcategory, Getad, Secureddeal } from "@/api/account.js"
 
 // @ is an alias to /src
 import Navigation from '@/components/Navigation.vue'
@@ -635,16 +659,13 @@ export default {
       timer: null,  //定时器
       isshow: false,
       flag: 1,
-      checked: true,
+      checked: false,
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        title: '',//标题
+        content: '',//内容
+        price: '',//价格
+        buyer_contact: '',//买家联系方式
+        seller_contact: "",//卖家联系方式
       },
       username: {},
       shangping: [],
@@ -652,6 +673,13 @@ export default {
       wzwt: {},//网址委托
       ymwt: {},//域名委托
       zmtwt: {},//自媒体委托
+      showts: false,
+      showts1: false,
+      showts2: false,
+      showts3: false,
+      showts4: false,
+      showts5: false,
+      showts6: false,
     };
   },
   created () {
@@ -741,7 +769,76 @@ export default {
     secured () {
       this.isshow = true
     },
-    onSubmit () { },
+    //担保发布
+    async onSubmit () {
+      var role
+      if (this.flag == 1) {
+        role = 2
+      } else {
+        role = 1
+      }
+
+      if (!this.form.title) {
+        this.showts1 = true
+        setTimeout(() => {
+          this.showts1 = false
+        }, 3000)
+      } else if (!this.form.content) {
+        this.showts2 = true
+        setTimeout(() => {
+          this.showts2 = false
+        }, 3000)
+      } else if (!this.form.price) {
+        this.showts3 = true
+        setTimeout(() => {
+          this.showts3 = false
+        }, 3000)
+      } else if (!this.form.buyer_contact) {
+        this.showts4 = true
+        setTimeout(() => {
+          this.showts4 = false
+        }, 3000)
+      } else if (!this.form.seller_contact) {
+        this.showts5 = true
+        setTimeout(() => {
+          this.showts5 = false
+        }, 3000)
+      } else if (this.checked) {
+        const data = await Secureddeal({
+          username: local.get('username').username,
+          title: this.form.title,
+          content: this.form.content,
+          price: this.form.price,
+          buyer_contact: this.form.buyer_contact,
+          seller_contact: this.form.seller_contact,
+          role
+        })
+        console.log(data);
+        if (data.code == 200) {
+          this.isshow = false
+          this.form = {}
+          this.flag = 1
+          this.checked = false
+          this.$message({
+            message: data.message,
+            type: 'success'
+          });
+        } else if (data.code == 400 && data.message == "联系方式错误") {
+          this.showts6 = true
+          this.showts5 = false
+          setTimeout(() => {
+            this.showts6 = false
+          }, 3000)
+        }
+      }
+      else {
+        this.showts = true
+        setTimeout(() => {
+          this.showts = false
+        }, 3000)
+      }
+
+    },
     //定时器
     runInv () {
       this.timer = setInterval(() => {
@@ -1548,7 +1645,7 @@ export default {
 .operates11 {
   .el-dialog {
     min-width: 1000px;
-    height: 930px;
+    height: 830px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -1619,10 +1716,10 @@ export default {
             box-sizing: border-box;
             .el-input {
               width: 420px;
-              height: 50px;
+              height: 40px;
               .el-input__inner {
                 width: 420px;
-                height: 50px;
+                height: 40px;
                 font-size: 16px;
               }
             }
@@ -1654,14 +1751,15 @@ export default {
               font-size: 20px;
               font-family: Microsoft YaHei;
               color: #ffffff;
+              cursor: pointer;
             }
             .el-form-item {
-              margin-bottom: 40px !important;
+              margin-bottom: 30px !important;
               .el-form-item__label {
                 font-size: 18px;
                 font-family: Microsoft YaHei;
                 color: #333333;
-                line-height: 50px;
+                line-height: 40px;
               }
             }
             .thtone {
@@ -1736,5 +1834,20 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+.tishiyu {
+  position: absolute;
+  left: 256px;
+  bottom: 125px;
+}
+.tishiy {
+  position: absolute;
+  left: 0px;
+  top: 35px;
+}
+.tishiy1 {
+  position: absolute;
+  left: 0px;
+  top: 155px;
 }
 </style>

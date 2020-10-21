@@ -283,6 +283,7 @@ export default {
     },
     xiangqing (item) {
       window.sessionStorage.setItem("particul5", JSON.stringify(item))
+      this.$router.push({ path: "/onlinetrading/details5", query: { id: item.id } })
     },
   }
 }

@@ -32,3 +32,11 @@ export const Getad = params => req.get('/getad/', params)
 export const Merchandise = params => req.get('/querygoods/', params)
 //查询项目id
 export const Queryproject = params => req.get('/querytypeid/', params)
+//担保发布
+export const Secureddeal = params => req.post('/secureddeal/', params)
+//查询担保
+export const Querysecured = params => req.get('/querysecured/', params)
+//取消担保
+export const Cancelsecured = params => req.get('/cancelsecured/', params)
+//委托发布
+export const Entrustdeal = params => req.post('/entrustdeal/', params)

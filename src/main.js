@@ -10,6 +10,7 @@ import axios from 'axios'
 // Vue.prototype.$axios = axios
 // axios.defaults.crossDomain = true;
 axios.defaults.withCredentials = true;
+ElementUI.Dialog.props.lockScroll.default = false;
 Vue.use(ElementUI);
 // 引入本地存储工具函数
 import local from "@/utils/local";

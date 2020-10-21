@@ -315,6 +315,7 @@ export default {
     //查看详情
     xiangqing (item) {
       window.sessionStorage.setItem("particul", JSON.stringify(item))
+      this.$router.push({path:"/consignment/details",query:{id:item.id}})
     },
     handleSizeChange (val) {
 

@@ -309,6 +309,7 @@ export default {
     },
     xiangqing (item) {
       window.sessionStorage.setItem("particul4", JSON.stringify(item))
+      this.$router.push({ path: "/domainname/details4", query: { id: item.id } })
     },
   }
 }

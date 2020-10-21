@@ -198,6 +198,7 @@
 </template>
 
 <script>
+import { Merchandise, Queryproject } from "@/api/account.js"
 import Header from "@/components/Header.vue"
 import Floot from '@/components/Floot.vue'
 export default {
@@ -206,14 +207,20 @@ export default {
     Floot
   },
   created () {
-    setTimeout(() => {
-      let val = JSON.parse(window.sessionStorage.getItem("particul1"));
-      val.create_time = this.formateDate(val.create_time)
-      val.update_time = this.formateDate(val.update_time)
-      this.tablelist = val
+    setTimeout(async () => {
+      const data = await Merchandise({
+        project_key: "task_hall",
+        pagesize: 1,
+        pagenum: 1,
+        category_2: '',
+        id: this.$route.query.id
+      })
+      data.data.forEach(v => {
+        v.create_time = this.formateDate(v.create_time)
+        v.update_time = this.formateDate(v.update_time)
+      })
+      this.tablelist = data.data[0]
     }, 200)
-
-
   },
   data () {
     return {
