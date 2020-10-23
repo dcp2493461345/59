@@ -97,7 +97,7 @@ export default {
           // setCookie(sessionid, data.session)
           local.set('username', data.data)
           // local.set('token', data.data.token)
-           window.sessionStorage.setItem('tokeness', JSON.stringify( data.data.token))
+          window.sessionStorage.setItem('tokeness', JSON.stringify(data.data.token))
           this.$router.push("/")
           // console.log(document.cookie, "1111111111111");
         }

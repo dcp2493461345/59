@@ -102,44 +102,47 @@ export default {
         })
         console.log(data);
         if (data.code === 400) {
-          if (data.message === "旧密码格式错误") {
-             this.show = false;
-        this.show1 = false;
-        this.show2 = false;
-        this.show3 = false;
-        this.show4 = false;
+          if (data.message === "旧密码错误") {
+            this.show = false;
+            this.show1 = false;
+            this.show2 = false;
+            this.show3 = false;
+            this.show4 = false;
             this.show5 = true;
             setTimeout(() => {
               this.show5 = false;
             }, 3000)
           }
           if (data.message === "新密码格式错误") {
-                 this.show = false;
-        this.show1 = false;
-        this.show2 = false;
-        this.show3 = false;
-        this.show4 = false;
-        this.show5 = false;
+            this.show = false;
+            this.show1 = false;
+            this.show2 = false;
+            this.show3 = false;
+            this.show4 = false;
+            this.show5 = false;
             this.show6 = true;
             setTimeout(() => {
               this.show6 = false;
             }, 4000)
           }
         } else {
-                    this.show = false;
-        this.show1 = false;
-        this.show2 = false;
-        this.show3 = false;
-        this.show4 = false;
-        this.show5 = false;
-        this.show6 = false;
+          this.show = false;
+          this.show1 = false;
+          this.show2 = false;
+          this.show3 = false;
+          this.show4 = false;
+          this.show5 = false;
+          this.show6 = false;
           this.$message({
             message: "修改成功",
             type: 'success'
           });
-         this.password=""
-         this.newpassword=""
-         this.newpasswordes=""
+          this.password = ""
+          this.newpassword = ""
+          this.newpasswordes = ""
+          window.localStorage.clear()
+          window.sessionStorage.clear()
+          this.$routre.push("/login")
         }
       }
     }

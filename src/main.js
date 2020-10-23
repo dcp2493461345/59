@@ -21,6 +21,7 @@ router.beforeEach((to, from, next) => {
   // 从本地存储获取token
   let token = JSON.parse(window.sessionStorage.getItem('tokeness'));
 
+
   // if (token) { // 如果token存在，证明是登录成功进来的
   //   next() // 放行
   // } else { // 如果token不存在，证明没有登录，翻墙进来的

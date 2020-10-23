@@ -25,6 +25,7 @@ axios.interceptors.request.use(config => {
   // 在请求发送出去之前 带上一些东西 config是请求的配置对象， 如果直接返回 就等于什么都不带
   // 所有的axios请求，在请求发送出去之前 带上token
   let val = JSON.parse(window.sessionStorage.getItem('tokeness'));
+
   config.headers.Authorization = 'token ' + val
   // config.headers.Authorization = 'Bearer '
   // config.headers.Authorization = "Access-Control-Allow-Headers"
@@ -44,6 +45,15 @@ axios.interceptors.response.use(response => {
     window.localStorage.clear()
     window.sessionStorage.clear()
     router.push('/login')
+  }
+  if (data.message === "token失效") {
+    window.localStorage.clear()
+    window.sessionStorage.clear()
+    router.push('/login')
+    this.$message({
+      message: "该账户在其他地方登录，请重新登录",
+      type: 'warning'
+    });
   }
   // if (data.code === 200) {
   //   router.push('/login')
