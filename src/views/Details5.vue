@@ -130,38 +130,20 @@
             </div>
             <div class="titleess">- 相关推荐 -</div>
             <div class="introud02">
-              <div class="rooud01">
-                <div class="ten01"></div>
+              <div class="rooud01"
+                   v-for="(item,index) in tuijian "
+                   :key="index">
+                <div class="ten01">
+                  <img :src="item.pic"
+                       alt="">
+                </div>
                 <div class="ten02">
-                  <p class="p01">知名品牌代理店铺转让</p>
-                  <p class="p02">描述：上海家居用品网店转让，无扣分和违反规定情况，现在还在经营中，转让证件齐全。</p>
-                  <p class="p03">¥50600.00</p>
+                  <p class="p01">{{item.name}}</p>
+                  <p class="p02">描述：{{item.describe}}</p>
+                  <p class="p03">¥{{item.price}}</p>
                 </div>
               </div>
-              <div class="rooud01">
-                <div class="ten01"></div>
-                <div class="ten02">
-                  <p class="p01">知名品牌代理店铺转让</p>
-                  <p class="p02">描述：上海家居用品网店转让，无扣分和违反规定情况，现在还在经营中，转让证件齐全。</p>
-                  <p class="p03">¥50600.00</p>
-                </div>
-              </div>
-              <div class="rooud01">
-                <div class="ten01"></div>
-                <div class="ten02">
-                  <p class="p01">知名品牌代理店铺转让</p>
-                  <p class="p02">描述：上海家居用品网店转让，无扣分和违反规定情况，现在还在经营中，转让证件齐全。</p>
-                  <p class="p03">¥50600.00</p>
-                </div>
-              </div>
-              <div class="rooud01">
-                <div class="ten01"></div>
-                <div class="ten02">
-                  <p class="p01">知名品牌代理店铺转让</p>
-                  <p class="p02">描述：上海家居用品网店转让，无扣分和违反规定情况，现在还在经营中，转让证件齐全。</p>
-                  <p class="p03">¥50600.00</p>
-                </div>
-              </div>
+
             </div>
           </div>
           <div v-if="flag==2"
@@ -201,7 +183,7 @@
 </template>
 
 <script>
-import { Merchandise, Queryproject } from "@/api/account.js"
+import { Merchandise, Queryproject, Recommendgoods } from "@/api/account.js"
 import Header from "@/components/Header.vue"
 import Floot from '@/components/Floot.vue'
 export default {
@@ -223,20 +205,31 @@ export default {
       data.data.forEach(v => {
         v.create_time = this.formateDate(v.create_time)
         v.update_time = this.formateDate(v.update_time)
+        v.dot_create_time = this.formateDate(v.dot_create_time)
       })
       this.tablelist = data.data[0]
     }, 200)
 
-
+    setTimeout(() => {
+      this.recommendgoods()
+    }, 200)
   },
   data () {
     return {
       checked: true,
       tablelist: {},
-      flag: 1
+      flag: 1,
+      tuijian: []
     }
   },
   methods: {
+    async recommendgoods () {
+      const data = await Recommendgoods({
+        key: "dot_tradin",
+        id: this.$route.query.id
+      })
+      this.tuijian = data.data
+    },
     formateDate (time) {
       function addDateZero (num) {
         return (num < 10 ? "0" + num : num);
@@ -605,6 +598,10 @@ export default {
         width: 160px;
         height: 210px;
         background: #f4f4f4;
+        img {
+          width: 160px;
+          height: 210px;
+        }
       }
       .ten02 {
         width: 440px;
@@ -620,6 +617,9 @@ export default {
           font-family: Microsoft YaHei;
           color: #999999;
           line-height: 30px;
+           overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         .p03 {
           font-size: 24px;

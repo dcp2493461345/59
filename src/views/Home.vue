@@ -4,7 +4,7 @@
       <!-- 头部 -->
       <div class="home container">
         <div class="icon">
-          <div class="icon_tu"
+          <!-- <div class="icon_tu"
                @click="personal"
                style="cursor: pointer;">
             <img src="@/assets/imge/touxiang.jpg"
@@ -15,16 +15,36 @@
                style="cursor: pointer;">
             <p>欢迎使用</p>
             <p>{{username.username}}</p>
-          </div>
+          </div> -->
         </div>
-        <div class="nav-dao">
+        <div class="nav-dao"
+             v-if="!showes">
           <ul>
-            <li>消息</li>
+            <li class="nav-xiao" @click="xiaoxitiaozhuan">消息
+              <span class="yuandain">{{totales}}</span>
+            </li>
+            <li class="shuxian"></li>
+            <li class="usernames">
+              <p>欢迎使用~</p>
+              <p class="p_one2">用户名{{username.username}}
+                <span class="xialakuan">
+                  <ul class="xialashuju">
+                    <li @click="personal">个人中心</li>
+                    <li @click="personales">我的订单</li>
+                    <li @click="logout">退出登录</li>
+                  </ul>
+                </span>
+              </p>
+
+            </li>
+          </ul>
+        </div>
+        <div class="nav-dao1"
+             v-if="showes">
+          <ul>
             <li @click="toroutr"
-                v-if="showes"
                 class="li-two">登录</li>
-            <li v-if="showes"
-                @click="registers">注册</li>
+            <li @click="registers">注册</li>
           </ul>
         </div>
       </div>
@@ -42,16 +62,18 @@
                alt="">
           <div class="shu"></div>
           <input type="text"
+                 v-model="contentpitc"
                  placeholder="输入关键词...">
-          <div class="serch-one">搜索</div>
+          <div class="serch-one"
+               @click="searches">搜索</div>
         </div>
         <div class="reserch">
           <span>热门搜索:</span>
-          <span>网站寄售</span>
-          <span>服务市场</span>
-          <span>任务大厅</span>
-          <span>新媒体</span>
-          <span>APP交易</span>
+          <span @click="pitches">网站寄售</span>
+          <span @click="pitches1">域名交易</span>
+          <span @click="pitches2">任务大厅</span>
+          <span @click="pitches3">新媒体</span>
+          <span @click="pitches4">APP交易</span>
         </div>
       </div>
       <div>
@@ -76,7 +98,9 @@
           <li style="margin-left: 66px;">
             <router-link to="/onlinetrading">网店交易</router-link>
           </li>
-          <li style="margin-left: 66px;cursor: pointer;">代办代签约</li>
+          <li style="margin-left: 66px;cursor: pointer;">
+            <router-link to="/newmedia">新媒体</router-link>
+          </li>
           <li style="margin-left: 33px;">|</li>
           <li style="margin-left: 33px;color:#4C56CF;!important">
             <router-link to="/support">帮助中心</router-link>
@@ -109,7 +133,8 @@
                   <dd>
                     <a href="#"
                        v-for="(v,i) in item.data_list"
-                       :key="i">{{v.name}}</a>
+                       :key="i"
+                       @click="pitch(item,i)">{{v.name}}</a>
 
                   </dd>
                 </dl>
@@ -208,40 +233,44 @@
           <img src="@/assets/imge/pic_guanggao1.png"
                alt="">
           <div class="recruit_one">
-            <p>{{youxuanguangao[0].text}}</p>
-            <!-- <p>·此广告位招租，虚位以待。</p>
-            <p> ·阿里云采购季，云服务器74元/年起 </p>
-            <p> ·百度智能云 云虚机拼团9元/首年 </p> -->
+            <p v-for="(item,index) in youxuanguangao"
+               :key="index">
+              <a :href="item.skip_url"
+                 target="_blank">{{item.title}}</a>
+            </p>
           </div>
         </div>
         <div>
           <img src="@/assets/imge/pic_guanggao2.png"
                alt="">
           <div class="recruit_one">
-            <p>{{youxuanguangao[1].text}}</p>
-            <!-- <p>·此广告位招租，虚位以待。</p>
-            <p> ·阿里云采购季，云服务器74元/年起 </p>
-            <p> ·百度智能云 云虚机拼团9元/首年 </p> -->
+            <p v-for="(item,index) in youxuanguangao1"
+               :key="index">
+              <a :href="item.skip_url"
+                 target="_blank">{{item.title}}</a>
+            </p>
           </div>
         </div>
         <div>
           <img src="@/assets/imge/pic_guanggao3.png"
                alt="">
           <div class="recruit_one">
-            <p>{{youxuanguangao[2].text}}</p>
-            <!-- <p>·此广告位招租，虚位以待。</p>
-            <p> ·阿里云采购季，云服务器74元/年起 </p>
-            <p> ·百度智能云 云虚机拼团9元/首年 </p> -->
+            <p v-for="(item,index) in youxuanguangao2"
+               :key="index">
+              <a :href="item.skip_url"
+                 target="_blank">{{item.title}}</a>
+            </p>
           </div>
         </div>
         <div>
           <img src="@/assets/imge/pic_guanggao4.png"
                alt="">
           <div class="recruit_one">
-            <p>{{youxuanguangao[3].text}}</p>
-            <!-- <p>·此广告位招租，虚位以待。</p>
-            <p> ·阿里云采购季，云服务器74元/年起 </p>
-            <p> ·百度智能云 云虚机拼团9元/首年 </p> -->
+            <p v-for="(item,index) in youxuanguangao3"
+               :key="index">
+              <a :href="item.skip_url"
+                 target="_blank">{{item.title}}</a>
+            </p>
           </div>
         </div>
       </div>
@@ -260,7 +289,8 @@
             网站，域名，APP
           </p>
           <p class="guarantee_three">依托优质互联网创业圈资源，在网站、域名、app等互联网资产担保中交易额持续增长，让线上交易更安全靠谱，线上担保就上59danbao.cn</p>
-          <span class="guarantee_four">
+          <span class="guarantee_four"
+                @click="Immediately">
             立即前往
           </span>
         </div>
@@ -271,7 +301,8 @@
             自媒体账号
           </p>
           <p class="guarantee_three">自媒体账号包含各个平台的自媒体账号，比如微信公众号、今日头条、一点资讯 、搜狐、百度百家、网易、UC大鱼号等各种自媒体账号皆可</p>
-          <span class="guarantee_four">
+          <span class="guarantee_four"
+                @click="Immediately1">
             立即前往
           </span>
         </div>
@@ -279,10 +310,11 @@
           <img src="@/assets/imge/pic_kedanbao3.png"
                alt="">
           <p class="guarantee_two">
-            普通商品
+            网店交易
           </p>
-          <p class="guarantee_three">无论是计算机硬件还是奢侈品、汽车等，用59danbao.cn你可以轻松安全地从世界上任何地方购买商品</p>
-          <span class="guarantee_four">
+          <p class="guarantee_three">以专注“网店交易 用心服务”为核心价值，以“帮助电商成长”为使命！59danbao.cn网店交易竭诚为您服务，线上担保上59danbao.cn更靠谱</p>
+          <span class="guarantee_four"
+                @click="Immediately2">
             立即前往
           </span>
         </div>
@@ -293,7 +325,8 @@
             海量模板
           </p>
           <p class="guarantee_three">内置数百个网站数据源，全面覆盖多个行业，只需简单设置，就可快速准确获取数据</p>
-          <span class="guarantee_four">
+          <span class="guarantee_four"
+                @click="Immediately4">
             立即前往
           </span>
         </div>
@@ -304,7 +337,8 @@
             简单易用
           </p>
           <p class="guarantee_three">无需再学爬虫编程技术，简单三步就可以轻松抓取网页数据，支持多种格式一键导出，快速导入数据库</p>
-          <span class="guarantee_four">
+          <span class="guarantee_four"
+                @click="Immediately4">
             立即前往
           </span>
         </div>
@@ -315,7 +349,8 @@
             稳定高效
           </p>
           <p class="guarantee_three">分布式云集群服务器和多用户协作管理平台的支撑，可灵活调度任务，顺利爬取海量数据</p>
-          <span class="guarantee_four">
+          <span class="guarantee_four"
+                @click="Immediately4">
             立即前往
           </span>
         </div>
@@ -323,7 +358,8 @@
     </div>
     <div class="deal container-fluid">
       <div class="container">
-        <span class="deal01">
+        <span class="deal01"
+              @click="skip">
           现在开始交易
         </span>
       </div>
@@ -339,38 +375,13 @@
               <p class="maine_2">WEBSITE DELEGATE</p>
             </div>
             <ul class="maine01">
-              <!-- <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li> -->
               <li class="maine01_one"
                   v-for="(item,index) in wzwt.data"
                   :key="index">
-                <span class="maine01_one-content01">{{item.text}}</span>
+                <span class="maine01_one-content01">
+                  <a href="http://www.jd.com"
+                     target="_blank"> {{item.text}}</a>
+                </span>
                 <span class="maine01_one-content02">{{item.time}}</span>
               </li>
             </ul>
@@ -384,41 +395,12 @@
               <li class="maine01_one"
                   v-for="(item,index) in ymwt.data"
                   :key="index">
-                <span class="maine01_one-content01">{{item.text}}</span>
+                <span class="maine01_one-content01">
+                  <a href="http://www.jd.com"
+                     target="_blank"> {{item.text}}</a>
+                </span>
                 <span class="maine01_one-content02">{{item.time}}</span>
               </li>
-              <!-- <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li> -->
             </ul>
           </div>
           <div class="maine1">
@@ -430,41 +412,12 @@
               <li class="maine01_one"
                   v-for="(item,index) in zmtwt.data"
                   :key="index">
-                <span class="maine01_one-content01">{{item.text}}</span>
+                <span class="maine01_one-content01">
+                  <a href="http://www.jd.com"
+                     target="_blank"> {{item.text}}</a>
+                </span>
                 <span class="maine01_one-content02">{{item.time}}</span>
               </li>
-              <!-- <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li>
-              <li class="maine01_one">
-                <span class="maine01_one-content01">出爱站站长双权7教育咨询网，日IP20W，可小刀</span>
-                <span class="maine01_one-content02">2020-08-23</span>
-              </li> -->
             </ul>
           </div>
         </div>
@@ -580,7 +533,9 @@
               <span class="tishiy"
                     v-if="showts3"
                     style="color:red;">请输入交易价格</span>
-
+ <span class="tishiy"
+                    v-if="showts11"
+                    style="color:red;">价格格式错误</span>
             </el-form-item>
             <el-form-item label="买家联系方式 ：">
               <el-input v-model="form.buyer_contact"
@@ -637,6 +592,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import local from "@/utils/local";
 import { Getcategory, Getad, Secureddeal } from "@/api/account.js"
 
@@ -669,7 +625,10 @@ export default {
       },
       username: {},
       shangping: [],
-      youxuanguangao: {},//优选广告
+      youxuanguangao: [],//优选广告
+      youxuanguangao1: [],//优选广告
+      youxuanguangao2: [],//优选广告
+      youxuanguangao3: [],//优选广告
       wzwt: {},//网址委托
       ymwt: {},//域名委托
       zmtwt: {},//自媒体委托
@@ -680,16 +639,23 @@ export default {
       showts4: false,
       showts5: false,
       showts6: false,
+      showts11:false,
+      totol: 0,
+      contentpitc: ''
     };
   },
   created () {
     this.runInv()
     if (local.get('username')) {
       this.username = local.get('username')
+    }
+    if (sessionStorage.getItem("tokeness")) {
       this.showes = false
     }
     this.Getcategory()
     this.Getad()
+    console.log(this.$store.state.total, "11111111111");
+
   },
   computed: {
     //上一张
@@ -707,6 +673,9 @@ export default {
       } else {
         return this.currentIndex + 1;
       }
+    },
+    totales () {
+      return this.$store.state.total
     }
   },
   mounted () {
@@ -714,6 +683,56 @@ export default {
     window.addEventListener("scroll", this.showSearch)
   },
   methods: {
+    xiaoxitiaozhuan(){
+      this.$router.push('/personal/message')
+    },
+    pitch (item, i) {
+      if (item.name == "网站寄售") {
+        this.$router.push({ name: 'Consignment', params: { num_id: i+1 } });
+      }
+      if (item.name == "新媒体") {
+        this.$router.push({ name: 'Newmedia', params: { num_id:i+1 } });
+      }
+      if (item.name == "APP交易") {
+        this.$router.push({ name: 'Trading', params: { num_id: i+1 } });
+      }
+      if (item.name == "任务大厅") {
+        this.$router.push({ name: 'Subpage', params: { num_id: i+1 } });
+      }
+    },
+    pitches () {
+      this.contentpitc = "网站寄售"
+    },
+    pitches1 () {
+      this.contentpitc = "域名交易"
+    },
+    pitches2 () {
+      this.contentpitc = "任务大厅"
+    },
+    pitches3 () {
+      this.contentpitc = "新媒体"
+    },
+    pitches4 () {
+      this.contentpitc = "APP交易"
+    },
+    searches () {
+      if (this.contentpitc == "网站寄售") {
+        this.$router.push({ name: 'Consignment' })
+      } else if (this.contentpitc == "新媒体") {
+        this.$router.push({ name: 'Newmedia' })
+      } else if (this.contentpitc == "APP交易") {
+        this.$router.push({ name: 'Trading' })
+      } else if (this.contentpitc == "任务大厅") {
+        this.$router.push({ name: 'Subpage' })
+      } else if (this.contentpitc == "域名交易") {
+        this.$router.push({ name: 'Domainname' })
+      } else if (this.contentpitc == "网店交易") {
+        this.$router.push({ name: 'Onlinetrading' })
+      } else {
+        this.$router.push({ name: 'Consignment' })
+      }
+      this.contentpitc = ''
+    },
     //获取首页商品分类
     async Getcategory () {
       const data = await Getcategory({})
@@ -734,7 +753,10 @@ export default {
       lunbo.data.forEach(v => {
         this.dataList.push(v.url)
       })
-      this.youxuanguangao = data.data.yxgg.data
+      this.youxuanguangao = data.data.yxgg1.data
+      this.youxuanguangao1 = data.data.yxgg2.data
+      this.youxuanguangao2 = data.data.yxgg3.data
+      this.youxuanguangao3 = data.data.ysgg4.data
       data.data.wzwt.data.forEach(v => {
         v.time = this.formateDate(v.time)
 
@@ -767,7 +789,17 @@ export default {
       this.flag = 2
     },
     secured () {
-      this.isshow = true
+      if (!local.get('username')) {
+        this.$message({
+          message: "请先登录",
+          type: 'success'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+      } else {
+        this.isshow = true
+      }
     },
     //担保发布
     async onSubmit () {
@@ -829,6 +861,13 @@ export default {
           setTimeout(() => {
             this.showts6 = false
           }, 3000)
+        }else if (data.code == 400 && data.message == "价格格式错误") {
+          this.showts11 = true
+          this.showts5 = false
+          this.showts6 = false
+          setTimeout(() => {
+            this.showts11 = false
+          }, 3000)
         }
       }
       else {
@@ -875,6 +914,44 @@ export default {
           clearInterval(timeTop);
         }
       }, 10);
+    },
+    //开始交易
+    skip () {
+      // if (!local.get('username')) {
+      //   this.$message({
+      //     message: "请先登录",
+      //     type: 'success'
+      //   })
+      //   setTimeout(() => {
+        
+      //   }, 1000)
+      // }
+  this.$router.push('/consignment')
+    },
+    //立即前往 网址app
+    Immediately () {
+      this.$router.push("/consignment")
+    },
+    //立即前往 自媒体
+    Immediately1 () {
+      this.$router.push("/newmedia")
+    },
+    //立即前往 网店
+    Immediately2 () {
+      this.$router.push("/onlinetrading")
+    },
+    //立即前往 自媒体
+    Immediately4 () {
+      this.$router.push("/support")
+    },
+    //退出登录
+    logout () {
+      window.localStorage.clear()
+      window.sessionStorage.clear()
+      this.$router.push("/login")
+    },
+    personales () {
+      this.$router.push("/personal/order")
     }
   }
 }
@@ -886,7 +963,7 @@ export default {
 .home {
   background: #4c56cf;
   width: 1830px;
-  height: 50px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -917,28 +994,126 @@ export default {
       }
     }
   }
-  .nav-dao {
+  .nav-dao1 {
     display: flex;
     align-items: center;
     ul {
-      line-height: 80px;
       display: flex;
       align-items: center;
       li {
         display: inline-block;
-        width: 80px;
-        line-height: 32px;
+        width: 120px;
         text-align: center;
+        line-height: 50px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 18px;
         font-family: Microsoft YaHei;
         font-weight: 300;
         color: rgba(255, 255, 255, 1);
       }
-      .li-two {
-        border-radius: 5px;
-        background: #4048b2;
+      .li-one {
+        background: url('~@/assets/imge/btn_shouye denglu_sel.png');
+        margin-right: 20px;
       }
+      .li-two {
+        background: url('~@/assets/imge/btn_shouye denglu.png');
+      }
+    }
+  }
+  .nav-dao {
+    display: flex;
+    align-items: center;
+    ul {
+      display: flex;
+      align-items: center;
+      li {
+        display: inline-block;
+        cursor: pointer;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+    .nav-xiao {
+      text-align: center;
+      display: block;
+      width: 120px;
+      line-height: 60px;
+      background: url('~@/assets/imge/pic_shouyexiaoxi box .png');
+      font-size: 18px;
+      font-family: Microsoft YaHei;
+      font-weight: 300;
+      color: #ffffff;
+      position: relative;
+    }
+    .shuxian {
+      width: 4px;
+      height: 46px;
+      background: #ffffff;
+      margin-left: 22px;
+      margin-right: 16px;
+    }
+    .usernames {
+      p {
+        font-size: 20px;
+        font-family: Microsoft YaHei;
+        font-weight: 300;
+        color: #ffffff;
+      }
+      .p_one2 {
+        position: relative;
+        .xialakuan {
+          display: none;
+          width: 140px;
+          height: 150px;
+          position: absolute;
+          top: 22px;
+          left: 17px;
+          background: #ffffff;
+          .xialashuju {
+            display: flex;
+            flex-direction: column;
+            li {
+              width: 140px;
+              height: 50px;
+              background: #ffffff;
+              border: 1px solid #e3e3e3;
+              font-size: 18px;
+              font-family: Microsoft YaHei;
+              font-weight: 300;
+              color: #666666;
+              line-height: 50px;
+              text-align: center;
+            }
+            .active-li {
+              width: 140px;
+              height: 50px;
+              font-size: 18px;
+              font-family: Microsoft YaHei;
+              font-weight: 300;
+              color: #ffffff;
+              line-height: 50px;
+              background: #ff7b47;
+              border: 1px solid #ff7b47;
+            }
+            li:hover {
+              width: 140px;
+              height: 50px;
+              font-size: 18px;
+              font-family: Microsoft YaHei;
+              font-weight: 300;
+              color: #ffffff;
+              line-height: 50px;
+              background: #ff7b47;
+              border: 1px solid #ff7b47;
+            }
+          }
+        }
+      }
+    }
+    .usernames:hover .xialakuan {
+      display: block;
     }
   }
 }
@@ -1335,11 +1510,17 @@ export default {
         padding: 23px 23px 0px 23px;
         box-sizing: border-box;
         p {
+          width: 253px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size: 16px;
           font-family: Microsoft YaHei;
-          font-weight: 300;
           color: rgba(102, 102, 102, 1);
           line-height: 30px;
+          a:hover {
+            color: #17a1ff;
+          }
         }
       }
     }
@@ -1514,7 +1695,7 @@ export default {
               color: #999999;
             }
           }
-          .maine01_one:hover .maine01_one-content01 {
+          .maine01_one:hover .maine01_one-content01 a {
             color: #485dd4;
           }
         }
@@ -1849,5 +2030,16 @@ export default {
   position: absolute;
   left: 0px;
   top: 155px;
+}
+.yuandain {
+  display: block;
+  width: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: #ff3636;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  top: 0px;
 }
 </style>

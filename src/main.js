@@ -7,6 +7,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/reset.css' // reset.css
 import './assets/css/common.css' // common.css
 import axios from 'axios'
+//创建bus
+const bus = new Vue();
+Vue.prototype.$bus = bus;
 // Vue.prototype.$axios = axios
 // axios.defaults.crossDomain = true;
 axios.defaults.withCredentials = true;

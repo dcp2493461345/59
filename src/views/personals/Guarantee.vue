@@ -1,90 +1,72 @@
 <template>
   <div class="acounts">
-    <div class="account01">
-      <ul>
-        <!-- <li :class="{active01:$route.path=='/personal/guarantee'}">
-          <router-link to="/personal/guarantee">全部</router-link>
-        </li>
-        <li :class="{active01:$route.path=='/personal/guarantee/acccepted'}">
-          <router-link to="/personal/guarantee/acccepted">已受理</router-link>
-        </li>
-        <li :class="{active01:$route.path=='/personal/guarantee/notaccept'}">
-          <router-link to="/personal/guarantee/notaccept">未受理</router-link>
-        </li>
-        <li :class="{active01:$route.path=='/personal/guarantee/hrejected'}">
-          <router-link to="/personal/guarantee/hrejected">已拒单</router-link>
-        </li> -->
-        <!-- <li :class="{active01:$route.path=='/personal/myacount/setting'}">
-          <router-link to="/personal/myacount/setting">个人设置</router-link>
-        </li> -->
-        <li @click="tiaozhuan"
-            :class="{active01:flag==1}">全部</li>
-        <li @click="tiaozhuan1"
-            :class="{active01:flag==2}">已受理</li>
-        <li @click="tiaozhuan2"
-            :class="{active01:flag==3}">未受理</li>
-        <li @click="tiaozhuan3"
-            :class="{active01:flag==4}">已拒单</li>
-      </ul>
-      <div class="inputesone">
-        <el-input class="inputes"
-                  placeholder="请输入订单号"></el-input>
-        <span class="btnss1es">搜索</span>
+    <div v-if="!xiangshouw">
+      <div class="account01">
+        <ul>
+          <li @click="tiaozhuan"
+              :class="{active01:flag==1}">全部</li>
+          <li @click="tiaozhuan1"
+              :class="{active01:flag==2}">已受理</li>
+          <li @click="tiaozhuan2"
+              :class="{active01:flag==3}">未受理</li>
+          <li @click="tiaozhuan3"
+              :class="{active01:flag==4}">已拒单</li>
+        </ul>
+        <div class="inputesone">
+          <el-input class="inputes"
+                    v-model="ordernum"
+                    placeholder="请输入订单号"></el-input>
+          <span class="btnss1es"
+                @click="search">搜索</span>
+        </div>
       </div>
-      <!-- <div class="right01">
-        <div class="right_1">
-          <img src="@/assets/imge/pic_tixianzhanghu.png"
-               alt="">
-          提现账户</div>
-        <div class="right_2">
-          <img src="@/assets/imge/pic_tianjiazhanghao.png"
-               alt="">
-          添加账号</div>
-      </div> -->
-    </div>
-    <div class="tables">
-      <el-table :data="tableData"
-                style="width: 100%">
-        <el-table-column prop="num"
-                         min-width="200"
-                         label="订单号">
-        </el-table-column>
-        <el-table-column prop="update_time"
-                         min-width="120"
-                         label="时间">
-        </el-table-column>
-        <el-table-column prop="price"
-                         min-width="80"
-                         label="订单金额">
-        </el-table-column>
+      <div class="tables">
+        <el-table :data="tableData"
+                  style="width: 100%">
+          <el-table-column prop="num"
+                           min-width="200"
+                           label="订单号">
+          </el-table-column>
+          <el-table-column prop="update_time"
+                           min-width="120"
+                           label="时间">
+          </el-table-column>
+          <el-table-column prop="price"
+                           min-width="80"
+                           label="订单金额">
+          </el-table-column>
 
-        <el-table-column prop="status"
-                         min-width="60"
-                         label="订单状态">
-          <template slot-scope="scope">
-            <span v-if="scope.row.status==1">未受理</span>
-            <span v-if="scope.row.status==2">已受理</span>
-            <span v-if="scope.row.status==3">已拒单</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="content"
-                         label="订单详情">
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <span v-if="scope.row.status==1"
-                  style="color:#17A1FF;cursor: pointer;"
-                  @click="sumbit(scope.row)">取消订单</span>
-            <span v-if="scope.row.status==2"
-                  style="color:red">已受理</span>
-            <span v-if="scope.row.status==3"
-                  style="color:red">已拒单</span>
-          </template>
-        </el-table-column>
-      </el-table>
+          <el-table-column prop="status"
+                           min-width="60"
+                           label="订单状态">
+            <template slot-scope="scope">
+              <span v-if="scope.row.status==1">未受理</span>
+              <span v-if="scope.row.status==2">已受理</span>
+              <span v-if="scope.row.status==3">已拒单</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="content"
+                           label="订单详情">
+            <template slot-scope="scope">
+              <span style="cursor: pointer;"
+                    @click="xiangqinges(scope.row)">查看详情</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <span v-if="scope.row.status==1"
+                    style="color:#17A1FF;cursor: pointer;"
+                    @click="sumbit(scope.row)">取消订单</span>
+              <span v-if="scope.row.status==2"
+                    style="color:red">已受理</span>
+              <span v-if="scope.row.status==3"
+                    style="color:red">已拒单</span>
+            </template>
+          </el-table-column>
+        </el-table>
 
-    </div>
-    <!-- <div class="block">
+      </div>
+      <!-- <div class="block">
       <p class="record-data">共{{ pageNums }}页,共{{ totalPage }}条</p>
       <el-pagination background
                      :page-size="pageSize"
@@ -92,32 +74,63 @@
                      :total="totalPage"
                      :current-page.sync="currentPage"
                      @current-change="handleCurrentChange" />
-    </div> -->
-    <el-dialog title="提示"
-               :visible.sync="Application"
-               :append-to-body="true"
-               center
-               class="reminder"
-               top="35vh"
-               :close-on-click-modal="false"
-               width="380px">
-      <div class="footer-one">
-        <p>您确定取消订单？</p>
-      </div>
-      <div class="footer-class">
-        <span class="one"
-              @click="countermand">取消</span>
-        <span class="two"
-              @click="verify">确认</span>
-      </div>
-    </el-dialog>
+       </div> -->
+      <el-dialog title="提示"
+                 :visible.sync="Application"
+                 :append-to-body="true"
+                 center
+                 class="reminder"
+                 top="35vh"
+                 :close-on-click-modal="false"
+                 width="380px">
+        <div class="footer-one">
+          <p>您确定取消订单？</p>
+        </div>
+        <div class="footer-class">
+          <span class="one"
+                @click="countermand">取消</span>
+          <span class="two"
+                @click="verify">确认</span>
+        </div>
+      </el-dialog>
+    </div>
+    <div v-if="xiangshouw"
+         class="xiangqingye">
+      <p class="one_p">{{xiangqing.title}}</p>
+      <p>
+        <span class="able">订单号</span>
+        {{xiangqing.num}}
+      </p>
+      <p>
+        <span class="able">金额</span>
+        ￥{{xiangqing.price}}
+      </p>
+      <p>
+        <span class="able">时间</span>
+        {{xiangqing.create_time}}
+      </p>
+      <p>
+        <span class="able">买家</span>
+        {{xiangqing.buyer_contact}}
+      </p>
+      <p>
+        <span class="able">卖家</span>
+        {{xiangqing.seller_contact}}
+      </p>
+      <p>
+        <span class="able">内容</span>
+        {{xiangqing.content}}
+      </p>
+      <el-button class="btnn"
+                 @click="returns">确认</el-button>
+    </div>
   </div>
 
 </template>
 
 <script>
 import local from "@/utils/local";
-import { Querysecured, Cancelsecured } from "@/api/account.js"
+import { Querysecuredinfo, Querysecured, Cancelsecured } from "@/api/account.js"
 export default {
   data () {
     return {
@@ -129,10 +142,15 @@ export default {
       pageSize: 10, // 当前页条数
       Application: false,
       num: '',
-      status: ""
+      status: "",
+      ordernum: '',//订单号
+      xiangshouw: false,
+      username: '',
+      xiangqing: {}
     }
   },
   created () {
+    this.username = local.get('username').username
     this.getList()
   },
   methods: {
@@ -166,7 +184,7 @@ export default {
     },
     async getList () {
       const data = await Querysecured({
-        username: local.get('username').username,
+        username: this.username,
         pagesize: this.pageSize,
         pagenum: this.currentPage,
         status: this.status
@@ -195,12 +213,43 @@ export default {
     async verify () {
       const data = await Cancelsecured({
         num: this.num,
-        username: local.get('username').username
+        username: this.username
       })
       console.log(data);
       this.Application = false;
       this.getList()
     },
+    async search () {
+      const data = await Querysecured({
+        username: this.username,
+        pagesize: 1,
+        pagenum: 1,
+        status: this.status,
+        num: this.ordernum
+      })
+      data.data.forEach(v => {
+        v.create_time = this.formateDate(v.create_time)
+        v.update_time = this.formateDate(v.update_time)
+      })
+      this.tableData = data.data;
+      this.totalPage = data.total_count; // 总条数
+      this.pageNums = data.total_page;
+      this.ordernum = ""
+    },
+    //查看详情
+    async xiangqinges (row) {
+      this.xiangshouw = true
+      const data = await Querysecuredinfo({
+        username: this.username,
+        num: row.num
+      })
+      data.data.create_time = this.formateDate(data.data.create_time)
+      data.data.update_time = this.formateDate(data.data.update_time)
+      this.xiangqing = data.data
+    },
+    returns () {
+      this.xiangshouw = false;
+    }
   }
 }
 </script>
@@ -210,6 +259,22 @@ export default {
   width: 100%;
   padding: 0 50px;
   box-sizing: border-box;
+  .xiangqingye {
+    p {
+      line-height: 50px;
+    }
+    .able {
+      display: inline-block;
+      width: 120px;
+    }
+    .btnn {
+      width: 150px;
+      background: #17a1ff;
+      color: #fff;
+      margin-top: 20px;
+    }
+  }
+
   .account01 {
     line-height: 50px;
     width: 100%;
@@ -255,6 +320,7 @@ export default {
         border-radius: 5px;
         display: inline-block;
         margin-left: 10px;
+        cursor: pointer;
       }
     }
 

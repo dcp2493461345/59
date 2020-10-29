@@ -121,8 +121,8 @@
               <p class="adv02">2.商家主动参与竞标</p>
               <p class="adv02">3.自由选择最佳投标</p>
               <span @click="daishouweituo"
-                    style=" cursor: pointer;">+代售委托</span>
-              <span style="margin-left: 40px;cursor: pointer;">+代购委托</span>
+                    style=" cursor: pointer;font-size:16px">+代售委托</span>
+              <span @click="daishouweituo1" style="margin-left: 10px;cursor: pointer;">+代购委托</span>
             </div>
             <div class="adv2">
               <span class="adv10"></span>
@@ -167,7 +167,8 @@
     <el-dialog class="operates11"
                :visible.sync="isshow">
       <div class="one">
-        <span class="one_2">代售委托</span>
+        <span v-if="role==1" class="one_2">代售委托</span>
+        <span v-if="role==2"  class="one_2">代购委托</span>
       </div>
       <div class="conterentsd">
         <div class="left-from"
@@ -198,15 +199,20 @@
               <span class="tishiy"
                     v-if="showts3"
                     style="color:red;">请输入价格</span>
-
+              <span class="tishiy"
+                    v-if="showts11"
+                    style="color:red;">价格格式错误</span>
             </el-form-item>
             <p style="margin-left:16px;width: 96px;height: 24px;font-size: 24px;font-family: Microsoft YaHei;font-weight: bold;color: #2798CE;">个人信息</p>
             <el-form-item label="QQ ：">
               <el-input v-model="form.qq"
-                        placeholder="请输入您的QQ或微信，请确保可以及时与您沟通">></el-input>
+                        placeholder="请输入您的QQ，请确保可以及时与您沟通">></el-input>
               <span class="tishiy"
                     v-if="showts4"
-                    style="color:red;">请输入QQ或微信</span>
+                    style="color:red;">请输入QQ</span>
+                      <span class="tishiy"
+                    v-if="showts12"
+                    style="color:red;">QQ格式错误</span>
             </el-form-item>
             <el-form-item label="手机 ：">
               <el-input v-model="form.mobile"
@@ -240,12 +246,14 @@
           <p class="right_two">
             发布委托是免费的，只有成功出售或者购买收取相应中介费。
           </p>
-          <p class="right_one" style="margin-top:182px;">
+          <p class="right_one"
+             style="margin-top:182px;">
             <span class="wenhao"></span>发布委托何时受理</p>
           <p class="right_two">
             发布委托后，51担保网会及时处理您的需求，请耐心等待。
           </p>
-          <p class="right_one"  style="margin-top:182px;">
+          <p class="right_one"
+             style="margin-top:182px;">
             <span class="wenhao"></span>联系方式</p>
           <p class="right_two">
             为保障委托及时受理，请填写真实有效的联系方式。
@@ -268,8 +276,12 @@ export default {
     Floot
   },
   created () {
+    if (this.$route.params.num_id) {
+      this.checked = this.$route.params.num_id 
+    }
     this.getList()
     this.getproject()
+
   },
   data () {
     return {
@@ -289,6 +301,8 @@ export default {
       showts5: false,
       showts6: false,
       isshow: false,
+      showts11: false,
+      showts12: false,
       flag: 1,
       checkedesdcp: false,
       form: {
@@ -298,6 +312,7 @@ export default {
         qq: '',//买家联系方式
         mobile: "",//卖家联系方式
       },
+      role:1
     }
   },
   methods: {
@@ -307,7 +322,7 @@ export default {
         project_key: "new_media",
         pagesize: this.pagesize,
         pagenum: this.currentPage,
-        category_2: '',
+        category_2: this.checked,
         category: '',
         money: ''
       })
@@ -403,6 +418,11 @@ export default {
     },
     daishouweituo () {
       this.isshow = true;
+      this.role=1
+    },
+     daishouweituo1 () {
+      this.isshow = true;
+      this.role=2
     },
     //担保发布
     async onSubmit () {
@@ -439,7 +459,7 @@ export default {
           price: this.form.price,
           qq: this.form.qq,
           mobile: this.form.mobile,
-          role: 1
+          role: this.role
         })
         console.log(data);
         if (data.code == 200) {
@@ -456,6 +476,18 @@ export default {
           this.showts5 = false
           setTimeout(() => {
             this.showts6 = false
+          }, 3000)
+        } else if (data.code == 400 && data.message == "价格格式错误") {
+          this.showts11 = true
+
+          setTimeout(() => {
+            this.showts11 = false
+          }, 3000)
+        } else if (data.code == 400 && data.message == "QQ格式错误") {
+          this.showts12 = true
+
+          setTimeout(() => {
+            this.showts12 = false
           }, 3000)
         }
       } else {
@@ -520,6 +552,7 @@ export default {
         li {
           padding: 0 13px;
           line-height: 30px;
+          font-size: 16px;
           margin-top: 18px;
           cursor: pointer;
         }
@@ -539,6 +572,7 @@ export default {
         margin-bottom: 10px;
         li {
           padding: 0 13px;
+          font-size: 16px;
           line-height: 30px;
           margin-top: 18px;
           min-width: 20px;
@@ -680,12 +714,19 @@ export default {
           line-height: 30px;
         }
         span {
+          display: inline-block;
           width: 100px;
           line-height: 30px;
           text-align: center;
           color: #32afe9;
           margin-top: 20px;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-family: Microsoft YaHei;
+          font-weight: 300;
+          color: #32afe9;
           border: 1px solid #32afe9;
+          cursor: pointer;
         }
       }
       .adv2 {

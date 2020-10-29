@@ -1,7 +1,8 @@
 <template>
   <div class="container-fluid">
     <Header></Header>
-    <div class="latesnew">
+    <div class="latesnew"
+         v-if="!xiangqingshow">
       <div class="new01">
         <div class="container advertising">
           <div class="advert-one"></div>
@@ -10,39 +11,28 @@
       </div>
       <div class="container-fluid new02">
         <div class="container new_1">
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
+          <div class="one"
+               @click="xiangqingye(item)"
+               v-for="(item,index) in zixutable"
+               :key="index">
+            <img :src="item.index_pic"
                  alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
+            <p>{{item.title}}</p>
           </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
+
         </div>
         <div class="container new_2"></div>
         <div class="container new_1">
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
+          <div class="one"
+               @click="xiangqingye(item)"
+               v-for="(item,index) in zixutable1"
+               :key="index">
+            <img :src="item.index_pic"
                  alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
+            <p>{{item.title}}</p>
+
           </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
+
         </div>
       </div>
       <div class="new01">
@@ -53,38 +43,25 @@
       </div>
       <div class="container-fluid new02">
         <div class="container new_1">
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
+          <div class="one"
+               @click="xiangqingye(item)"
+               v-for="(item,index) in huodongtable"
+               :key="index">
+            <img :src="item.index_pic"
                  alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
+            <p>{{item.title}}</p>
           </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
+
         </div>
         <div class="container new_2"></div>
         <div class="container new_1">
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
+          <div class="one"
+               @click="xiangqingye(item)"
+               v-for="(item,index) in huodongtable1"
+               :key="index">
+            <img :src="item.index_pic"
                  alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
-          </div>
-          <div class="one">
-            <img src="@/assets/imge/banner_zixun1.png"
-                 alt="">
-            <p>59担保网,让虚拟资产交易更安心</p>
+            <p>{{item.title}}</p>
           </div>
         </div>
       </div>
@@ -92,11 +69,28 @@
 
       </div>
     </div>
+    <div class="latesnew"
+         v-if="xiangqingshow">
+      <div class="contentes container">
+        <p class="text-one">
+          {{xiangqcontent.title}}
+        </p>
+        <p class="text-two">
+          {{xiangqcontent.text}}
+        </p>
+        <p class="text-three">
+          <img :src="xiangqcontent.pic"
+               alt="">
+        </p>
+      </div>
+    </div>
     <Floot></Floot>
   </div>
 </template>
 
 <script>
+import local from "@/utils/local";
+import { Queryinfo } from "@/api/account.js"
 import Header from "@/components/Header.vue"
 import Floot from '@/components/Floot.vue'
 export default {
@@ -105,14 +99,48 @@ export default {
     Floot
   },
   created () {
-
+    this.Queryinfo()
+    this.Queryinfo1()
   },
   data () {
     return {
-
+      zixutable: [],
+      zixutable1: [],
+      huodongtable: [],
+      huodongtable1: [],
+      xiangqingshow: false,
+      xiangqcontent: {}
     }
   },
   methods: {
+    async Queryinfo () {
+      const data = await Queryinfo({
+        flag: 1
+      })
+      data.data.forEach((v, i) => {
+        if (i > 2) {
+          this.zixutable1.push(v)
+        } else {
+          this.zixutable.push(v)
+        }
+      })
+    },
+    async Queryinfo1 () {
+      const data = await Queryinfo({
+        flag: 2
+      })
+      data.data.forEach((v, i) => {
+        if (i > 2) {
+          this.huodongtable.push(v)
+        } else {
+          this.huodongtable1.push(v)
+        }
+      })
+      console.log(data);
+    },
+    xiangqingye (row) {
+      this.$router.push({ name: "Centent", query: { row } })
+    }
   }
 }
 </script>
@@ -150,9 +178,15 @@ export default {
       justify-content: space-between;
       padding-top: 30px;
       box-sizing: border-box;
+      cursor: pointer;
       .one {
         width: 406px;
         height: 340px;
+
+        img {
+          width: 406px;
+          height: 300px;
+        }
         p {
           margin-top: 10px;
           text-align: center;
@@ -170,6 +204,24 @@ export default {
   .new03 {
     height: 120px;
     background: #f4f4f4;
+  }
+  .contentes {
+    min-height: 600px;
+    padding: 60px 200px 100px 296px;
+    box-sizing: border-box;
+    .text-one {
+      font-size: 30px;
+      color: #007bb7;
+    }
+    .text-two {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #666;
+      line-height: 35px;
+    }
+    .text-three {
+      margin-top: 30px;
+    }
   }
 }
 </style>

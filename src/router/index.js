@@ -264,6 +264,16 @@ const routes = [
     name: 'Details5',
     component: () => import('../views/Details5.vue')
   },
+  {
+    path: '/forget',
+    name: 'Forget',
+    component: () => import('../views/Forget.vue')
+  },
+  {
+    path: '/latestnews/centent',
+    name: 'Centent',
+    component: () => import('../views/xiangqingye.vue')
+  },
 ]
 
 const router = new VueRouter({

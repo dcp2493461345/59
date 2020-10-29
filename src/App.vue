@@ -2,33 +2,31 @@
   <router-view />
 </template>
 <script>
-import { Verifytoken } from "@/api/account.js"
+import local from "@/utils/local";
+import { Verifytoken, Querymessage } from "@/api/account.js"
 export default {
-  created () {
-    // this.Verifytoken()
-    // window.onbeforeunload = function (e) {
-    //   var storage = window.localStorage;
-    //   storage.clear()
-    // }
-    // let val = JSON.parse(window.sessionStorage.getItem('tokeness'));
-    // if (!val) {
-    // localStorage.removeItem("username")
-    // }
-    window.localStorage.clear()
-    window.sessionStorage.clear()
+  data () {
+    return {
+      user: {},
+      ordernum: '',
+      total_count: 0
+    }
   },
-  watch: {
+  created () {
+    this.user = local.get('username')
+    this.Querymessage()
 
   },
   methods: {
-    // async Verifytoken () {
-    //   const data = await Verifytoken({})
-    //   console.log(data);
-    //   if (data.message = "无效token") {
-    //     window.localStorage.clear()
-    //     window.sessionStorage.clear()
-    //   }
-    // },
+
+    async Querymessage () {
+      const data = await Querymessage({
+        userid: this.user.user_id,
+        status: 1,
+      })
+      this.total_count = data.total_count
+      this.$store.commit("setTotal", this.total_count);
+    }
   },
   // mounted(){
   //         // 关闭浏览器窗口的时候清空浏览器缓存在localStorage的数据
@@ -38,22 +36,22 @@ export default {
   //         }
   //     }
   mounted () {
-    // var storage = window.localStorage;
-    // let beginTime = 0; //开始时间
-    // let differTime = 0; //时间差
-    // window.onunload = function () {
-    //   differTime = new Date().getTime() - beginTime;
-    //   if (differTime <= 5) {
-    //     window.localStorage.clear()
-    //     window.sessionStorage.clear()
-    //     console.log("这是关闭");
-    //   } else {
-    //     console.log("这是刷新");
-    //   }
-    // };
-    // window.onbeforeunload = function () {
-    //   beginTime = new Date().getTime();
-    // };
+    var storage = window.localStorage;
+    let beginTime = 0; //开始时间
+    let differTime = 0; //时间差
+    window.onunload = function () {
+      differTime = new Date().getTime() - beginTime;
+      if (differTime <= 5) {
+        window.localStorage.clear()
+        window.sessionStorage.clear()
+        console.log("这是关闭");
+      } else {
+        console.log("这是刷新");
+      }
+    };
+    window.onbeforeunload = function () {
+      beginTime = new Date().getTime();
+    };
   }
 }
 </script>

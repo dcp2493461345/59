@@ -17,25 +17,42 @@
       </div>
       <div class="boking02 container">
         <div class="adv2"
-             v-for="(i,index) in 10"
+             v-for="(item,index) in broker"
              :key="index">
           <div class="one">
-            <span class="adv10"></span>
+            <span class="adv10">
+              <img :src="item.pic"
+                   alt="">
+            </span>
             <div class="two">
-              <p class="adv11">客服@小美</p>
+              <p class="adv11">{{item.username}}</p>
               <span @click="dialogVisible">投诉</span>
               <span @click="dialogVisible1"
                     style="background:#FF7348 !important;margin-left:5px;">打赏</span>
             </div>
           </div>
-          <div class="adv12"></div>
-          <p class="adv13">QQ:3002255225 </p>
-          <p class="adv13">手机:139****15698</p>
-          <p class="adv13">电话:400-258-125</p>
-          <p class="adv13">擅长:域名 企业QQ 网站交易 </p>
+          <div class="adv12">
+          </div>
+          <div class="conents">
+            <p class="adv13">QQ:{{item.qq}} </p>
+            <p class="adv13">手机:{{item.mobile}}</p>
+            <p class="adv13">电话:{{item.phone}}</p>
+            <p class="adv131">擅长:{{item.describe}} </p>
+          </div>
           <div class="adv14">
-            <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" /><span style="margin-left:25px;">交谈</span></span>
-            <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" /><span style="margin-left:28px;">交谈</span></span>
+            <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
+              <span style="margin-left:25px;">交谈</span>
+            </span>
+            <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" />
+              <span style="margin-left:28px;"
+                    class="sp5">交谈</span>
+              <span class="sp3"
+                    style="display:none">
+                <img :src="item.qr_code"
+                     alt="">
+              </span>
+            </span>
+
           </div>
         </div>
 
@@ -143,10 +160,12 @@
         <span class="one01"></span>
       </div>
       <div class="two">
-        您当前验证的账号:<span class="two01">592908128810701</span>为真,可交易转账！
+        您当前验证的账号:
+        <span class="two01">592908128810701</span>为真,可交易转账！
       </div>
       <div class="three">
-        温馨提示：查询结果为我方对应号码数据,但不排除非法人员伪造号码进行诈骗,如有疑问请联系我们官方电话<span class="two01">400-128-0616</span>
+        温馨提示：查询结果为我方对应号码数据,但不排除非法人员伪造号码进行诈骗,如有疑问请联系我们官方电话
+        <span class="two01">400-128-0616</span>
       </div>
     </el-dialog>
     <!-- 经纪人验证 -->
@@ -154,16 +173,19 @@
                :visible.sync="isshow3"
                width="30%">
       <div class="four">
-        <span class="one_2">收款账号校验</span>
+        <span class="one_2">经纪人验证</span>
       </div>
       <el-form ref="form"
-               :model="form"
+               :model="brokernum"
                label-width="110px">
         <el-form-item>
           <span class="imges"></span>
           <el-input class="yanzheng"
-                    v-model="form.name"
-                    placeholder="请输入您需要验证经纪人的：手机号或QQ号">></el-input>
+                    v-model="brokernum.num"
+                    placeholder="请输入您需要验证经纪人的：手机号或QQ号"></el-input>
+          <span style="color:red;height:20px;width:200px;display:block;">
+            <span v-if="isshow4">请输入手机号或QQ号</span>
+          </span>
         </el-form-item>
         <el-form-item>
           <span class="btn"
@@ -171,20 +193,29 @@
         </el-form-item>
       </el-form>
       <div class="one">
-        400-128-0616
-        <span class="one01"></span>
+        {{numes}}
+        <span class="one01"
+              v-if="!isshow5"></span>
       </div>
       <div class="two">
-        您当前验证的账号:<span class="two01">400-128-0616</span>为真,可交易转账！
+        您当前验证的号码:
+        <span v-if="!isshow5"
+              class="two01">400-128-0616 </span>
+        <span v-if="!isshow5">为真经纪人,可与之交易！</span>
+        <span v-if="isshow5"
+              class="two01">{{jianum}}</span>
+        <span v-if="isshow5">为假经纪人，不可与之交易！</span>
       </div>
       <div class="three">
-        温馨提示：查询结果为我方对应号码数据,但不排除非法人员伪造号码进行诈骗,如有疑问请联系我们官方电话<span class="two01">400-128-0616</span>
+        温馨提示：查询结果为我方对应号码数据,但不排除非法人员伪造号码进行诈骗,如有疑问请联系我们官方电话
+        <span class="two01">400-128-0616</span>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { Querysupuser, Verifystaff } from "@/api/account.js"
 import Header from "@/components/Header.vue"
 import Floot from '@/components/Floot.vue'
 export default {
@@ -193,7 +224,7 @@ export default {
     Floot
   },
   created () {
-
+    this.Querysupuser()
   },
   data () {
     return {
@@ -201,7 +232,14 @@ export default {
       isshow1: false,
       isshow2: false,
       isshow3: false,
+      isshow4: false,
+      isshow5: false,
+      jianum: "",
+      numes: '400-128-0616',
       flag: 1,
+      brokernum: {
+        num: ''
+      },
       form: {
         name: '',
         region: '',
@@ -211,19 +249,44 @@ export default {
         type: [],
         resource: '',
         desc: ''
-      }
+      },
+      broker: []
     };
   },
   methods: {
+    //查询经纪人
+    async  Querysupuser () {
+      const data = await Querysupuser({})
+      console.log(data);
+      this.broker = data.data
 
+    },
     dialogVisible () {
       this.isshow = true
     },
     dialogVisible1 () {
       this.isshow1 = true
     },
-    onSubmit () {
-      console.log('submit!');
+    //验证经纪人
+    async onSubmit () {
+      console.log(this.brokernum.num);
+      if (!this.brokernum.num) {
+        this.isshow4 = true
+        setTimeout(() => {
+          this.isshow4 = false
+        }, 3000)
+      } else {
+        const data = await Verifystaff({
+          staff: this.brokernum.num
+        })
+        console.log(data);
+        if (data.code == 400 && data.message == "假经纪人，不可与之交易！") {
+          this.isshow5 = true
+          this.numes = this.brokernum.num
+          this.jianum = this.brokernum.num
+        }
+      }
+
     },
     btnnes () {
       this.flag = 1
@@ -242,6 +305,9 @@ export default {
     },
     password () {
       this.isshow3 = true
+      this.isshow5 = false
+      this.numes = '400-128-0616'
+      this.brokernum.num = ''
     }
   }
 }
@@ -258,7 +324,7 @@ export default {
     .one {
       width: 600px;
       line-height: 160px;
-      background: url("~@/assets/imge/pic_pingtaijingjiren.png") no-repeat;
+      background: url('~@/assets/imge/pic_pingtaijingjiren.png') no-repeat;
       text-align: center;
       font-size: 40px;
       font-family: Microsoft YaHei;
@@ -268,7 +334,7 @@ export default {
     .two {
       width: 310px;
       height: 160px;
-      background: url("~@/assets/imge/pic_zhenjiajingjiren.png") no-repeat;
+      background: url('~@/assets/imge/pic_zhenjiajingjiren.png') no-repeat;
       padding-top: 30px;
       box-sizing: border-box;
       .two_01 {
@@ -296,7 +362,7 @@ export default {
     .three {
       width: 310px;
       height: 160px;
-      background: url("~@/assets/imge/pic_zhenjiazhanghao.png") no-repeat;
+      background: url('~@/assets/imge/pic_zhenjiazhanghao.png') no-repeat;
       padding-top: 30px;
       box-sizing: border-box;
       .two_01 {
@@ -380,6 +446,11 @@ export default {
           height: 70px;
           background: #f4f4f4;
           border-radius: 50%;
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
         }
         .two {
           .adv11 {
@@ -408,7 +479,17 @@ export default {
         background: #f4f4f4;
         margin-top: 20px;
       }
+      .conents {
+        width: 200px;
+      }
       .adv13 {
+        font-size: 16px;
+        font-family: Microsoft YaHei;
+        color: #999999;
+        line-height: 30px;
+        text-indent: 30px;
+      }
+      .adv131 {
         font-size: 16px;
         font-family: Microsoft YaHei;
         color: #999999;
@@ -442,11 +523,29 @@ export default {
           font-family: Microsoft YaHei;
           color: #ffffff;
           position: relative;
+          cursor: pointer;
           img {
             position: absolute;
             left: 17px;
             top: 10px;
           }
+        }
+        .sp2:hover .sp3 {
+          display: block !important;
+          margin: 0 auto;
+          width: 240px;
+          height: 220px;
+          background: #ffffff;
+          position: absolute;
+          top: -230px;
+          left: -120px;
+          img {
+            width: 200px;
+            height: 200px;
+          }
+        }
+        .sp2:hover .sp5 {
+          color: #ccc;
         }
       }
     }
@@ -618,7 +717,7 @@ export default {
 .operate1 {
   ::v-deep.el-dialog {
     min-width: 1000px;
-    height: 930px;
+    height: 800px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -660,7 +759,7 @@ export default {
           width: 81px;
           height: 82px;
           display: inline-block;
-          background: url("~@/assets/imge/pic_zhen.png");
+          background: url('~@/assets/imge/pic_zhen.png');
           position: absolute;
           top: -26px;
           right: 320px;
@@ -721,7 +820,7 @@ export default {
           width: 32px;
           height: 30px;
           display: inline-block;
-          background: url("~@/assets/imge/ic_shuru.png");
+          background: url('~@/assets/imge/ic_shuru.png');
           position: absolute;
           top: 21px;
           left: 26px;

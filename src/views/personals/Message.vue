@@ -78,7 +78,7 @@ export default {
         line-height: 40px;
         text-align: center;
         color: #fff;
-        background: url("~@/assets/imge/btn_tixianzhanghu.png") no-repeat;
+        background: url('~@/assets/imge/btn_tixianzhanghu.png') no-repeat;
         background-size: 100% 100%;
         display: flex;
         align-items: center;
@@ -97,7 +97,7 @@ export default {
         line-height: 40px;
         text-align: center;
         color: #fff;
-        background: url("~@/assets/imge/btn_tianjiazhanghao.png") no-repeat;
+        background: url('~@/assets/imge/btn_tianjiazhanghao.png') no-repeat;
         background-size: 100% 100%;
         display: flex;
         align-items: center;

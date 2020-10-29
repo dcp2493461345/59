@@ -7,24 +7,30 @@
              alt="">
       </div>
       <div class="searchess">
-        <input type="text">
-        <span class="search-btn">
+        <input type="text"
+               style="color:#000000"
+               v-model="contentpitc">
+        <span @click="searches"
+              class="search-btn">
           搜索
         </span>
       </div>
       <div class="top-nav-menu">
         <ul v-show="!show">
-          <li @click="personal">消息</li>
+          <li>消息</li>
           <li @click="toroutr"
               class="showe">登录</li>
           <li @click="registers">注册</li>
         </ul>
         <ul v-show="show">
           <li class="tixingxiaoxi"
-              @click="personal">消息</li>
+              @click="xiaoxitiaozhuan">消息
+            <span class="yuandain">{{totales}}</span>
+          </li>
           <li class="shuxian"></li>
-          <li class="usernames">
-            <p>欢迎使用~</p>
+          <li @click="personal"
+              class="usernames11">
+            <p style="margin-top:-8px;">欢迎使用~</p>
             <p>{{username.username}}</p>
           </li>
         </ul>
@@ -75,7 +81,8 @@ export default {
   data () {
     return {
       show: false,
-      username: {}
+      username: {},
+      contentpitc: ''
     };
   },
   created () {
@@ -84,7 +91,33 @@ export default {
       this.show = true
     }
   },
+  computed: {
+    totales () {
+      return this.$store.state.total
+    }
+  },
   methods: {
+    xiaoxitiaozhuan () {
+      this.$router.push('/personal/message')
+    },
+    searches () {
+      if (this.contentpitc == "网站寄售") {
+        this.$router.push({ name: 'Consignment' })
+      } else if (this.contentpitc == "新媒体") {
+        this.$router.push({ name: 'Newmedia' })
+      } else if (this.contentpitc == "APP交易") {
+        this.$router.push({ name: 'Trading' })
+      } else if (this.contentpitc == "任务大厅") {
+        this.$router.push({ name: 'Subpage' })
+      } else if (this.contentpitc == "域名交易") {
+        this.$router.push({ name: 'Domainname' })
+      } else if (this.contentpitc == "网店交易") {
+        this.$router.push({ name: 'Onlinetrading' })
+      } else {
+        this.$router.push({ name: 'Consignment' })
+      }
+      this.contentpitc = ''
+    },
     returnhome () {
       this.$router.push("/")
     },
@@ -159,7 +192,7 @@ export default {
         li {
           width: 80px;
           text-align: center;
-          line-height: 26px;
+          line-height: 40px;
           font-size: 14px;
         }
         .tixingxiaoxi {
@@ -168,6 +201,7 @@ export default {
           background: #e3e3e3;
           border-radius: 15px;
           margin-right: 20px;
+          position: relative;
         }
         .shuxian {
           width: 4px;
@@ -175,7 +209,7 @@ export default {
           background: #eaeaea;
           margin-right: 10px;
         }
-        .usernames {
+        .usernames11 {
           width: 100px;
           height: 40px;
           color: #333333;
@@ -188,6 +222,7 @@ export default {
           color: #ffffff;
           background: url('~@/assets/imge/btn_wode denglu.png');
           background-size: 100% 100%;
+          line-height: 40px;
         }
       }
     }
@@ -241,5 +276,17 @@ export default {
       }
     }
   }
+}
+.yuandain {
+  display: block;
+  width: 20px;
+  text-align: center;
+  line-height: 20px;
+  background: #ff3636;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  color: #fff;
 }
 </style>

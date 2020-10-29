@@ -119,6 +119,9 @@ export default {
     Floot
   },
   created () {
+    if (this.$route.params.num_id) {
+      this.checked = this.$route.params.num_id
+    }
     this.getList()
     this.getproject()
   },
@@ -139,10 +142,8 @@ export default {
         project_key: "task_hall",
         pagesize: this.pagesize,
         pagenum: this.currentPage,
-        category_2: ''
+        category_2: this.checked
       })
-      console.log(data);
-
       this.tabedata = data.data
       this.count = data.total_count
     },
@@ -207,6 +208,7 @@ export default {
         padding: 0 13px;
         line-height: 30px;
         margin-top: 18px;
+        font-size: 16px;
         cursor: pointer;
       }
     }
@@ -234,6 +236,7 @@ export default {
         height: 30px;
         line-height: 30px;
         cursor: pointer;
+        font-size: 16px;
         padding: 0 13px;
       }
       .nav-li {

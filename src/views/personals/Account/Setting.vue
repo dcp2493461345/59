@@ -1,7 +1,7 @@
 <template>
   <div class="passwordes">
     <el-form ref="form"
-             v-show="show"
+             v-show="show&&showphone"
              label-width="100px">
       <el-form-item label="ID："
                     class="kuang">
@@ -12,7 +12,8 @@
                     class="kuang">
         <el-input v-model="user.mobile"
                   disabled></el-input>
-        <span class="part">更换</span>
+        <span class="part"
+              @click="Replacephone">更换</span>
       </el-form-item>
       <el-form-item label="邮箱："
                     class="kuang">
@@ -32,6 +33,55 @@
       <el-form-item>
         <el-button @click="sumbitbtn"
                    type="primary">保存</el-button>
+      </el-form-item>
+    </el-form>
+    <!-- 手机 -->
+    <el-form ref="forms"
+             v-show="!showphone"
+             label-width="100px">
+      <el-form-item label="旧手机号："
+                    class="kuang">
+        <el-input v-model="user.mobile"
+                  disabled></el-input>
+      </el-form-item>
+      <el-form-item label="新手机号：">
+        <el-input v-model="newmobile"></el-input>
+        <span class="yanzheng">
+          <span v-show="phoneshow">请输入手机号码</span>
+          <span v-show="phoneshow1">请输入正确的手机号码</span>
+          <span v-show="phoneshow5">该手机号已经被注册</span>
+        </span>
+      </el-form-item>
+
+      <el-form-item label="图形验证码：">
+        <el-input v-model="image_code"></el-input>
+        <span class="part"></span>
+        <span class="part5"
+              @click="Getimgcaptcha">看不清，换一张！</span>
+        <div class="imges64">
+          <img :src="this.previewImgObj"
+               alt="">
+        </div>
+        <span class="yanzheng">
+          <span v-show="phoneshow2">请输入图形验证码</span>
+          <span v-show="phoneshow3">图形验证码错误</span>
+        </span>
+      </el-form-item>
+      <el-form-item label="短信验证码：">
+        <el-input v-model="sms_code"></el-input>
+        <span class="part9"
+              @click="acquire1"
+              v-show="times">点击获取</span>
+        <span class="part10"
+              v-show="!times">{{count}}秒后重试</span>
+        <span class="yanzheng">
+          <span v-show="phoneshow4">请输入短信验证码</span>
+        </span>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button @click="sumbitbtn2"
+                   type="primary">提交</el-button>
       </el-form-item>
     </el-form>
     <!-- 邮箱 -->
@@ -55,6 +105,7 @@
         <el-input v-model="emailveryfi"></el-input>
         <span class="yanzheng">
           <span v-show="show4">验证码错误</span>
+          <span v-show="show5">请输入验证码</span>
         </span>
         <span class="part9"
               @click="acquire"
@@ -72,7 +123,7 @@
 
 <script>
 import local from "@/utils/local";
-import { Changeusername, SendEmailCodeView, Changeemail } from "@/api/account.js"
+import { Changemobile, Sendsms, Changeusername, SendEmailCodeView, Changeemail, Getgraphiccaptcha } from "@/api/account.js"
 export default {
   data () {
     return {
@@ -84,11 +135,25 @@ export default {
       show2: false,
       show3: false,
       show4: false,
+      show5: false,
+      showphone: true,
       newemail: '',
       emailveryfi: '',
       times: true,
       count: '',
       timer: null,
+      newmobile: '',
+      image_code: null,
+      previewImgObj: '',
+      image_text: '',
+      sms_code: '',
+      phoneshow: false,
+      phoneshow1: false,
+      phoneshow2: false,
+      phoneshow3: false,
+      phoneshow4: false,
+      phoneshow5: false,
+
     }
   },
   created () {
@@ -152,6 +217,9 @@ export default {
     //更换邮箱
     Replace () {
       this.show = false
+      this.newemail = ''
+      this.emailveryfi = ''
+      this.times = true
     },
     //点击获取验证码
     async acquire () {
@@ -206,27 +274,164 @@ export default {
     },
     //确认提交修改邮箱
     async sumbitbtn1 () {
-      const data = await Changeemail({
-        id: this.user.user_id,
-        new_email: this.newemail,
-        email: this.user.email,
-        email_code: this.emailveryfi
-      })
-      console.log(data);
-      if (data.code === 200) {
-          this.show4=false
-        this.$message({
-          message: `邮箱修改成功`,
-          type: 'success'
-        });
-        this.user.email = this.newemail
-        local.set("username", this.user)
-        this.show = true
+      if (!this.newemail) {
+        this.show1 = true;
+        setTimeout(() => {
+          this.show1 = false
+        }, 3000)
+      } else if (!this.emailveryfi) {
+        this.show5 = true;
+        setTimeout(() => {
+          this.show5 = false
+        }, 3000)
       } else {
-        this.show4=true;
-        setTimeout(()=>{
-          this.show4=false
-        },3000)
+        const data = await Changeemail({
+          id: this.user.user_id,
+          new_email: this.newemail,
+          email: this.user.email,
+          email_code: this.emailveryfi
+        })
+        console.log(data);
+        if (data.code === 200) {
+          this.show4 = false
+          this.$message({
+            message: `邮箱修改成功`,
+            type: 'success'
+          });
+          this.user.email = this.newemail
+          local.set("username", this.user)
+          this.show = true
+        } else {
+          this.show4 = true;
+          setTimeout(() => {
+            this.show4 = false
+          }, 3000)
+        }
+      }
+
+    },
+    //更换手机号
+    Replacephone () {
+      this.Getimgcaptcha()
+      this.showphone = false
+    },
+    //获取图形验证码
+    async Getimgcaptcha () {
+      const data = await Getgraphiccaptcha({})
+      this.previewImgObj = 'data:image/png;base64,' + data.data.img_base64
+      this.image_text = data.data.image_text
+    },
+    //点击获取验证码
+    async acquire1 () {
+      if (!this.newmobile) {
+        this.phoneshow = true
+        setTimeout(() => {
+          this.phoneshow = false
+        }, 3000)
+      } else if (!this.image_code) {
+        this.phoneshow = false
+        this.phoneshow2 = true
+        setTimeout(() => {
+          this.phoneshow2 = false
+        }, 3000)
+      } else {
+        const data = await Sendsms({
+          image_code: this.image_code,
+          image_text: this.image_text,
+          mobile: this.newmobile
+        })
+        if (data.code == 200) {
+          this.$message({
+            message: `验证码短信已发送到${this.newmobile}`,
+            type: 'success'
+          });
+          const TIME_COUNT = 60;
+          if (!this.timer) {
+            this.count = TIME_COUNT;
+            this.times = false;
+            this.timer = setInterval(() => {
+              if (this.count > 0 && this.count <= TIME_COUNT) {
+                this.count--;
+              } else {
+                this.times = true;
+                clearInterval(this.timer);
+                this.timer = null;
+              }
+            }, 1000)
+          }
+        } else if (data.code === 400) {
+          if (data.message == "请输入正确的手机号码") {
+            this.phoneshow1 = true
+            setTimeout(() => {
+              this.phoneshow1 = false
+            }, 3000)
+          }
+          if (data.message == "验证码错误") {
+            this.phoneshow1 = false
+            this.phoneshow3 = true
+            setTimeout(() => {
+              this.phoneshow3 = false
+            }, 3000)
+          }
+        }
+
+      }
+
+    },
+    //修改手机号
+    async sumbitbtn2 () {
+      if (!this.newmobile) {
+        this.phoneshow = true
+        setTimeout(() => {
+          this.phoneshow = false
+        }, 3000)
+      } else if (!this.image_code) {
+        this.phoneshow = false
+        this.phoneshow2 = true
+        setTimeout(() => {
+          this.phoneshow2 = false
+        }, 3000)
+      } else if (!this.sms_code) {
+        this.phoneshow = false
+        this.phoneshow2 = false
+        this.phoneshow4 = true
+        setTimeout(() => {
+          this.phoneshow4 = false
+        }, 3000)
+      } else {
+        const data = await Changemobile({
+          old_mobile: this.user.mobile,
+          new_mobile: this.newmobile,
+          mobile_code: this.sms_code
+        })
+        if (data.code == 400) {
+          if (data.message == "该手机号已经被注册") {
+            this.phoneshow = false
+            this.phoneshow2 = false
+            this.phoneshow4 = false
+            this.phoneshow5 = true
+            setTimeout(() => {
+              this.phoneshow5 = false
+            }, 3000)
+          }
+          if (data.message == "该手机号已经被注册") {
+            this.phoneshow = false
+            this.phoneshow2 = false
+            this.phoneshow4 = false
+            this.phoneshow5 = true
+            setTimeout(() => {
+              this.phoneshow5 = false
+            }, 3000)
+          }
+        } else {
+          this.$message({
+            message: `手机号修改成功`,
+            type: 'success'
+          });
+          this.user.mobile = this.newmobile
+          local.set("username", this.user)
+          this.showphone = true
+        }
       }
     },
   }
@@ -328,6 +533,26 @@ export default {
     position: absolute;
     top: 31px;
     left: 0px;
+  }
+}
+.part5 {
+  position: absolute;
+  left: 455px;
+  top: 15px;
+  display: inline-block;
+  height: 20px;
+  color: #0196f6;
+  cursor: pointer;
+}
+.imges64 {
+  width: 100px;
+  height: 41px;
+  position: absolute;
+  right: 224px;
+  top: 0px;
+  img {
+    width: 130px;
+    height: 41px;
   }
 }
 </style>

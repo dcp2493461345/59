@@ -26,7 +26,8 @@
           </span>
           <span class="input_one"></span>
           <span class="input_two"></span>
-          <span class="forget">忘记密码？</span>
+          <span class="forget"
+                @click="forgets">忘记密码？</span>
           <div class="login-btn">
             <img class="tubiao"
                  src="@/assets/imge/pic_lijidenglu.png"
@@ -102,6 +103,11 @@ export default {
           // console.log(document.cookie, "1111111111111");
         }
       }
+    },
+    forgets () {
+      console.log(123);
+
+      this.$router.push("/forget")
     }
   }
 
@@ -208,6 +214,7 @@ export default {
         position: absolute;
         top: 270px;
         left: 384px;
+        cursor: pointer;
       }
       .login-btn {
         width: 170px;

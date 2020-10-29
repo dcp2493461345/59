@@ -40,3 +40,27 @@ export const Querysecured = params => req.get('/querysecured/', params)
 export const Cancelsecured = params => req.get('/cancelsecured/', params)
 //委托发布
 export const Entrustdeal = params => req.post('/entrustdeal/', params)
+//查询经纪人
+export const Querysupuser = params => req.get('/querysupuser/', params)
+//验证经纪人
+export const Verifystaff = params => req.get('/verifystaff/', params)
+//签到
+export const Sign = params => req.get('/sign/', params)
+//修改手机号
+export const Changemobile = params => req.post('/changemobile/', params)
+//忘记密码
+export const Forgetpassword = params => req.post('/forgetpassword/', params)
+//查询担保详细信息
+export const Querysecuredinfo = params => req.get('/querysecuredinfo/', params)
+//查询签到
+export const Querysign = params => req.get('/querysign/', params)
+//查询订单
+export const Queryorder = params => req.get('/queryorder/', params)
+//查询消息
+export const Querymessage = params => req.get('/querymessage/', params)
+//消息操作
+export const Altermessage = params => req.get('/altermessage/', params)
+//资讯
+export const Queryinfo = params => req.get('/queryinfo/', params)
+//商品详情推荐
+export const Recommendgoods = params => req.get('/recommendgoods/', params)

@@ -58,9 +58,12 @@
     </div>
     <div class="one04">
       <ul>
-        <li class="two00">
+        <li class="two00"
+            @click="Sign">
           <img src="@/assets/imge/pic_wode qiandao.png"
-               alt=""> 签到
+               alt="">
+          <span v-show="!isSign">签到</span>
+          <span v-show="isSign">已签到</span>
         </li>
         <li class="two11">
           <img src="@/assets/imge/wode youhuiquan.png"
@@ -76,19 +79,22 @@
 </template>
 
 <script>
+import { Querysign, Sign } from "@/api/account.js"
 import local from "@/utils/local";
 import { Getinfo } from "@/api/account.js"
 export default {
   data () {
     return {
       user: {},
-      user_id: ''
+      user_id: '',
+      isSign: false
     }
   },
   created () {
     let username = local.get('username')
     this.user_id = username.user_id
     this.Getinfo()
+    this.Querysign()
   },
   methods: {
     async Getinfo () {
@@ -96,6 +102,34 @@ export default {
         user_id: this.user_id
       })
       this.user = data.data
+    },
+    //签到
+    async Sign () {
+      if (!this.isSign) {
+        const data = await Sign({
+          userid: this.user_id
+        })
+        console.log(data);
+        if (data.code == 200) {
+          this.isSign = true
+          this.$message({
+            message: "签到成功",
+            type: "success"
+          })
+        }
+
+      }
+    },
+    async  Querysign () {
+      const data = await Querysign({
+        userid: this.user_id
+      })
+      console.log(data);
+      if (data.code == 400) {
+        if (data.message == "已签到") {
+          this.isSign = true
+        }
+      }
     }
   }
 }
@@ -319,7 +353,7 @@ export default {
         color: #fff;
         cursor: pointer;
         img {
-          margin-right: 20px;
+          margin-right: 40px;
           width: 40px;
           height: 40px;
         }

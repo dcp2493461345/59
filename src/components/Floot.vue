@@ -67,21 +67,45 @@
     <div class="container-fluid blogroll">
       <div class="container blogroll_01">
         <span>友情链接：</span>
-        <span><a href="#">百度</a></span>
+        <span>
+          <a href="http://www.baidu.com"
+             target="_blank">百度</a>
+        </span>
         <span class="shuxian"></span>
-        <span><a href="#">搜狗</a></span>
+        <span>
+          <a href="https://www.sogou.com"
+             target="_blank">搜狗</a>
+        </span>
         <span class="shuxian"></span>
-        <span><a href="#">支付宝</a></span>
+        <span>
+          <a href="https://www.alipay.com/"
+             target="_blank">支付宝</a>
+        </span>
         <span class="shuxian"></span>
-        <span><a href="#">阿里云</a></span>
+        <span>
+          <a href="https://www.aliyun.com/?utm_content=se_1000301881"
+             target="_blank">阿里云</a>
+        </span>
         <span class="shuxian"></span>
-        <span><a href="#">腾讯云</a></span>
+        <span>
+          <a href="https://cloud.tencent.com/?fromSource=gwzcw.2212127.2212127.2212127&utm_medium=cpd&utm_id=gwzcw.2212127.2212127.2212127"
+             target="_blank">腾讯云</a>
+        </span>
         <span class="shuxian"></span>
-        <span><a href="#">财付通</a></span>
+        <span>
+          <a href="https://www.tenpay.com/v3/"
+             target="_blank">财付通</a>
+        </span>
         <span class="shuxian"></span>
-        <span><a href="#">宝塔面板</a></span>
+        <span>
+          <a href="https://www.stopddos.cn/?bd_vid=9119128730858696973"
+             target="_blank">宝塔面板</a>
+        </span>
         <span class="shuxian"></span>
-        <span><a href="#">聚合数据</a></span>
+        <span>
+          <a href="https://www.juhe.cn/?s=bd_1001&bd_vid=9207377428197508281"
+             target="_blank">聚合数据</a>
+        </span>
       </div>
     </div>
     <div class="container flootes">

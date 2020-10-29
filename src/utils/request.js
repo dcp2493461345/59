@@ -44,6 +44,10 @@ axios.interceptors.response.use(response => {
   if (data.message === "无效token") {
     window.localStorage.clear()
     window.sessionStorage.clear()
+    this.$message({
+      message: "登录失效",
+      type: 'warning'
+    });
     router.push('/login')
   }
   if (data.message === "token失效") {
@@ -51,7 +55,7 @@ axios.interceptors.response.use(response => {
     window.sessionStorage.clear()
     router.push('/login')
     this.$message({
-      message: "该账户在其他地方登录，请重新登录",
+      message: "登录失效",
       type: 'warning'
     });
   }
