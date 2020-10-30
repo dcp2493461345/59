@@ -39,7 +39,7 @@
             <el-checkbox v-model="checked">我已经阅读并同意
               <span style="color:#32AFE9;cursor: pointer;">《59danbao.cn服务协议》</span>
             </el-checkbox>
-            <span class="one_06">联系经纪人</span>
+            <span class="one_06"  @click="lianxijijir">联系经纪人</span>
           </div>
         </div>
         <div class="two">
@@ -53,20 +53,34 @@
             <p>2、若需查询更多信息请联系59担保网经纪人核实。</p>
             <p>3、为了安全起见，不要轻易与卖家进行线下交易；非平台线上交易的项目，出现任何后果均与59担保网无关，无论卖家以任何理由要求线下交易的，请联系59担保网经纪人举报。</p>
           </div>
-          <div class="adv2">
-            <span class="adv10"></span>
-            <p class="adv11">客服@小美</p>
-            <div class="adv12"></div>
-            <p class="adv13">QQ:3002255225 </p>
-            <p class="adv13">手机:139****15698</p>
-            <p class="adv13">电话:400-258-125</p>
-            <p class="adv13">擅长:域名 企业QQ 网站交易 </p>
+          <div class="adv2"
+               v-for="(item,index) in supser"
+               :key="index">
+            <span class="adv10">
+              <img :src="item.pic"
+                   alt="">
+            </span>
+            <p class="adv11">客服@{{item.username}}</p>
+            <div class="adv12">
+            </div>
+            <p class="adv13">QQ:{{item.qq}} </p>
+            <p class="adv13">手机:{{item.mobile}}</p>
+            <p class="adv13">电话:{{item.phone}}</p>
+            <p class="adv13">擅长:{{item.describe}} </p>
             <div class="adv14">
               <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
-                <span style="margin-left:25px;">交谈</span>
+                <span style="margin-left:25px;">  <a style="color:#fff;"
+                     target="_blank"
+                     href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a></span>
               </span>
               <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" />
-                <span style="margin-left:28px;">交谈</span>
+                <span style="margin-left:28px;"
+                      class="sp5">交谈</span>
+                <span class="sp3"
+                      style="display:none">
+                  <img :src="item.qr_code"
+                       alt="">
+                </span>
               </span>
             </div>
           </div>
@@ -179,6 +193,23 @@
       </div>
     </div>
     <Floot></Floot>
+     <el-dialog title=""
+               :visible.sync="Application"
+               :append-to-body="true"
+               center
+               class="reminder"
+               top="35vh"
+               :close-on-click-modal="false"
+               width="380px">
+      <div class="footer-one">
+        <p style="margin-bottom:20px;">QQ:2493461345</p>
+        <p>电话:18708136869</p>
+      </div>
+      <div class="footer-class">
+        <span class="two"
+              @click="verify">确认</span>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -213,16 +244,30 @@ export default {
     setTimeout(() => {
       this.recommendgoods()
     }, 200)
+    this.$store.state.supuser.forEach((v, i) => {
+      if (i < 1) {
+        this.supser.push(v)
+      }
+    })
   },
   data () {
     return {
       checked: true,
+      supser: [],
       tablelist: {},
+      Application: false,
       flag: 1,
       tuijian: []
     }
   },
   methods: {
+       lianxijijir () {
+      this.Application = true
+    },
+    verify () {
+      this.Application = false
+
+    },
     async recommendgoods () {
       const data = await Recommendgoods({
         key: "dot_tradin",
@@ -386,6 +431,11 @@ export default {
           height: 50px;
           background: #f4f4f4;
           border-radius: 50%;
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
         }
         .adv11 {
           font-size: 16px;
@@ -439,8 +489,24 @@ export default {
               position: absolute;
               left: 17px;
               top: 10px;
-              z-index: 99999999999999999;
             }
+          }
+          .sp2:hover .sp3 {
+            display: block !important;
+            margin: 0 auto;
+            width: 240px;
+            height: 230px;
+            background: #ffffff;
+            position: absolute;
+            top: -230px;
+            left: -120px;
+            img {
+              width: 200px;
+              height: 200px;
+            }
+          }
+          .sp2:hover .sp5 {
+            color: #ccc;
           }
         }
       }
@@ -617,7 +683,7 @@ export default {
           font-family: Microsoft YaHei;
           color: #999999;
           line-height: 30px;
-           overflow: hidden;
+          overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
@@ -681,6 +747,111 @@ export default {
         color: #ff7348;
         cursor: pointer;
       }
+    }
+  }
+}
+.reminder {
+  .el-dialog {
+    min-width: 380px;
+    border-radius: 5px;
+    height: 210px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .el-dialog__header {
+      text-align: left;
+      height: 43px !important;
+      border-radius: 5px;
+      padding: 12px 19px 12px;
+      border-bottom: 1px solid #eff2f5;
+      .el-dialog__title {
+        font-size: 16px !important;
+      }
+      .el-dialog__headerbtn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        padding: 0;
+        background: 0 0;
+        border: none;
+        outline: 0;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    }
+    .el-dialog__body {
+      text-align: initial;
+      //padding: 24px 25px 25px 0px;
+      padding: 0px;
+      .el-myclass {
+        padding-left: 55px;
+        height: 65px !important;
+        .el-form-item__label {
+          padding: 0 8px 0 0;
+          text-align: left;
+        }
+        .el-input__inner {
+          // background-color: #f00;
+          width: 266px !important;
+          height: 32px !important;
+          border: 1px solid rgba(210, 210, 210, 1) !important;
+          border-radius: 4px !important;
+          color: #333333;
+          padding: 0px 7px;
+        }
+      }
+    }
+    .footer-one {
+      width: 336px;
+      height: 112px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      p {
+        font-size: 16px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+      }
+    }
+    .footer-class {
+      // background-color: #f00;
+      cursor: pointer;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+
+      .two {
+        width: 72px;
+        height: 30px;
+        border-radius: 4px;
+        background-color: #25bad9;
+        border-color: #25bad9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+      }
+      .one {
+        width: 72px;
+        height: 30px;
+        border-radius: 4px;
+        background-color: #ffffff;
+        border: 1px solid rgba(204, 204, 204, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #999999;
+      }
+    }
+    .el-form-item {
+      margin-bottom: 0;
+      height: 50px !important;
     }
   }
 }

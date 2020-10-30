@@ -122,7 +122,7 @@
             <ul>
               <li>
                 <p class="subtitle">
-                  <span v-for="(v,i) in item.data_list"
+                  <span   @click="pitch(item,i)" v-for="(v,i) in item.data_list"
                         :key="i">{{v.name}}</span>
                 </p>
                 <dl class="sideNavone">
@@ -594,7 +594,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import local from "@/utils/local";
-import { Getcategory, Getad, Secureddeal } from "@/api/account.js"
+import { Getcategory, Getad, Secureddeal ,Querymessage} from "@/api/account.js"
 
 // @ is an alias to /src
 import Navigation from '@/components/Navigation.vue'
@@ -654,8 +654,7 @@ export default {
     }
     this.Getcategory()
     this.Getad()
-    console.log(this.$store.state.total, "11111111111");
-
+this.Querymessage()
   },
   computed: {
     //上一张
@@ -683,6 +682,14 @@ export default {
     window.addEventListener("scroll", this.showSearch)
   },
   methods: {
+     async Querymessage () {
+      const data = await Querymessage({
+        userid: this.username.user_id,
+        status: 1,
+      })
+      this.total_count = data.total_count
+      this.$store.commit("setTotal", this.total_count);
+    },
     xiaoxitiaozhuan(){
       this.$router.push('/personal/message')
     },

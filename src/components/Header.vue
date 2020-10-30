@@ -23,7 +23,8 @@
           <li @click="registers">注册</li>
         </ul>
         <ul v-show="show">
-          <li class="tixingxiaoxi">消息
+          <li class="tixingxiaoxi"
+              @click="xiaoxitiaozhuan">消息
             <span class="yuandain">{{totales}}</span>
           </li>
           <li class="shuxian"></li>
@@ -97,6 +98,10 @@ export default {
     }
   },
   methods: {
+    xiaoxitiaozhuan () {
+      this.$router.push('/personal/message')
+      this.$bus.$emit("updataes");
+    },
     searches () {
       if (this.contentpitc == "网站寄售") {
         this.$router.push({ name: 'Consignment' })

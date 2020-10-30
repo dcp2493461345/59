@@ -41,7 +41,11 @@
           </div>
           <div class="adv14">
             <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
-              <span style="margin-left:25px;">交谈</span>
+              <span style="margin-left:25px;">
+                <a style="color:#fff;"
+                   target="_blank"
+                   href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a>
+              </span>
             </span>
             <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" />
               <span style="margin-left:28px;"
@@ -200,7 +204,7 @@
       <div class="two">
         您当前验证的号码:
         <span v-if="!isshow5"
-              class="two01">400-128-0616 </span>
+              class="two01">{{jianum}}</span>
         <span v-if="!isshow5">为真经纪人,可与之交易！</span>
         <span v-if="isshow5"
               class="two01">{{jianum}}</span>
@@ -234,7 +238,7 @@ export default {
       isshow3: false,
       isshow4: false,
       isshow5: false,
-      jianum: "",
+      jianum: "4001280616",
       numes: '400-128-0616',
       flag: 1,
       brokernum: {
@@ -257,9 +261,7 @@ export default {
     //查询经纪人
     async  Querysupuser () {
       const data = await Querysupuser({})
-      console.log(data);
       this.broker = data.data
-
     },
     dialogVisible () {
       this.isshow = true
@@ -308,6 +310,7 @@ export default {
       this.isshow5 = false
       this.numes = '400-128-0616'
       this.brokernum.num = ''
+      this.jianum = "4001280616"
     }
   }
 }

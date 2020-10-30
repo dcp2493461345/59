@@ -91,37 +91,34 @@
               <span @click="daishouweituo1"
                     style="margin-left: 10px;">+代购委托</span>
             </div>
-            <div class="adv2">
-              <span class="adv10"></span>
-              <p class="adv11">客服@小美</p>
-              <div class="adv12"></div>
-              <p class="adv13">QQ:3002255225 </p>
-              <p class="adv13">手机:139****15698</p>
-              <p class="adv13">电话:400-258-125</p>
-              <p class="adv13">擅长:域名 企业QQ 网站交易 </p>
-              <div class="adv14">
-                <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
-                  <span style="margin-left:25px;">交谈</span>
-                </span>
-                <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" />
-                  <span style="margin-left:28px;">交谈</span>
-                </span>
+            <div class="adv2"
+                 v-for="(item,index) in supser"
+                 :key="index">
+              <span class="adv10">
+                <img :src="item.pic"
+                     alt="">
+              </span>
+              <p class="adv11">客服@{{item.username}}</p>
+              <div class="adv12">
               </div>
-            </div>
-            <div class="adv2">
-              <span class="adv10"></span>
-              <p class="adv11">客服@小美</p>
-              <div class="adv12"></div>
-              <p class="adv13">QQ:3002255225 </p>
-              <p class="adv13">手机:139****15698</p>
-              <p class="adv13">电话:400-258-125</p>
-              <p class="adv13">擅长:域名 企业QQ 网站交易 </p>
+              <p class="adv13">QQ:{{item.qq}} </p>
+              <p class="adv13">手机:{{item.mobile}}</p>
+              <p class="adv13">电话:{{item.phone}}</p>
+              <p class="adv13">擅长:{{item.describe}} </p>
               <div class="adv14">
                 <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
-                  <span style="margin-left:25px;">交谈</span>
+                  <span style="margin-left:25px;"><a style="color:#fff;"
+                     target="_blank"
+                     href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a></span>
                 </span>
                 <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" />
-                  <span style="margin-left:28px;">交谈</span>
+                  <span style="margin-left:28px;"
+                        class="sp5">交谈</span>
+                  <span class="sp3"
+                        style="display:none">
+                    <img :src="item.qr_code"
+                         alt="">
+                  </span>
                 </span>
               </div>
             </div>
@@ -246,13 +243,19 @@ export default {
   },
   created () {
     if (this.$route.params.num_id) {
-      this.checked = this.$route.params.num_id 
+      this.checked = this.$route.params.num_id
     }
     this.getList()
     this.getproject()
+    this.$store.state.supuser.forEach((v, i) => {
+      if (i < 2) {
+        this.supser.push(v)
+      }
+    })
   },
   data () {
     return {
+      supser: [],
       tabedata: [],
       count: 0,
       currentPage: 1,//当前页
@@ -442,11 +445,13 @@ export default {
         margin-left: 20px;
         display: inline-block;
         margin-top: 20px;
+        font-size: 18px;
       }
       .table1 {
         margin-left: 20px;
         display: inline-block;
         margin-top: 25px;
+        font-size: 18px;
       }
       .navli {
         background: #32afe9;
@@ -458,7 +463,7 @@ export default {
       .nav0101 {
         line-height: 30px;
         height: 30px;
-        margin-left: 10px;
+        margin-left: 5px;
         display: inline-block;
         cursor: pointer;
         padding: 0 13px;
@@ -677,6 +682,11 @@ export default {
           height: 50px;
           background: #f4f4f4;
           border-radius: 50%;
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
         }
         .adv11 {
           font-size: 16px;
@@ -723,12 +733,29 @@ export default {
             font-family: Microsoft YaHei;
             color: #ffffff;
             position: relative;
+            cursor: pointer;
             img {
               position: absolute;
               left: 17px;
               top: 10px;
-              z-index: 99999999999999999;
             }
+          }
+          .sp2:hover .sp3 {
+            display: block !important;
+            margin: 0 auto;
+            width: 240px;
+            height: 230px;
+            background: #ffffff;
+            position: absolute;
+            top: -230px;
+            left: -120px;
+            img {
+              width: 200px;
+              height: 200px;
+            }
+          }
+          .sp2:hover .sp5 {
+            color: #ccc;
           }
         }
       }

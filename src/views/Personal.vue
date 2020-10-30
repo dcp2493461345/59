@@ -76,6 +76,10 @@ export default {
   },
   created () {
     this.dianiji()
+    this.$bus.$on("updataes", () => {
+      this.flag = 7
+    })
+
   },
   data () {
     return {

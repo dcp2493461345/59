@@ -3,7 +3,7 @@
 </template>
 <script>
 import local from "@/utils/local";
-import { Verifytoken, Querymessage } from "@/api/account.js"
+import { Verifytoken, Querymessage, Querysupuser } from "@/api/account.js"
 export default {
   data () {
     return {
@@ -15,10 +15,10 @@ export default {
   created () {
     this.user = local.get('username')
     this.Querymessage()
+    this.Querysupusers()
 
   },
   methods: {
-
     async Querymessage () {
       const data = await Querymessage({
         userid: this.user.user_id,
@@ -26,8 +26,14 @@ export default {
       })
       this.total_count = data.total_count
       this.$store.commit("setTotal", this.total_count);
-    }
+    },
+    //查询经纪人
+    async  Querysupusers () {
+      const data = await Querysupuser({})
+      this.$store.commit("setSupuser", data.data);
+    },
   },
+
   // mounted(){
   //         // 关闭浏览器窗口的时候清空浏览器缓存在localStorage的数据
   //         window.onbeforeunload = function (e) {
