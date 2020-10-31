@@ -15,7 +15,7 @@ import local from "@/utils/local";
 import { Message } from 'element-ui'
 
 // 设置默认请求的接口地址
-axios.defaults.baseURL = 'http://123.56.163.99:8000'
+axios.defaults.baseURL = 'http://123.56.163.99:80'
 axios.defaults.withCredentials = true;
 
 // axios.defaults.baseURL = 'http://www.txsq.com'

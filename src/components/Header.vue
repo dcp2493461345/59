@@ -89,6 +89,9 @@ export default {
   created () {
     if (local.get('username')) {
       this.username = local.get('username')
+
+    }
+    if (sessionStorage.getItem("tokeness")) {
       this.show = true
     }
   },
