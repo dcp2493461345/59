@@ -44,7 +44,7 @@
           <ul>
             <li @click="toroutr"
                 class="li-two">登录</li>
-            <li @click="registers">注册</li>
+            <li class="li-three" @click="registers">注册</li>
           </ul>
         </div>
       </div>
@@ -424,10 +424,10 @@
       </div>
     </div>
     <div class="container-fluid cooperative">
-      <div class="container advertising">
+      <!-- <div class="container advertising">
         <div class="advert-one"></div>
         <div class="advert-two">合作客户</div>
-      </div>
+      </div> -->
     </div>
     <!-- 右侧 侧边栏 -->
     <ul class="fixed-right">
@@ -1025,6 +1025,13 @@ this.Querymessage()
       .li-two {
         background: url('~@/assets/imge/btn_shouye denglu.png');
       }
+      .li-two:hover{
+        color:#ff7b47;
+      }
+   .li-three:hover{
+        color:#ff7b47;
+      }
+
     }
   }
   .nav-dao {
@@ -1053,6 +1060,12 @@ this.Querymessage()
       font-weight: 300;
       color: #ffffff;
       position: relative;
+    }
+    .nav-xiao:hover{
+        color:#ff7b47;
+        .yuandain{
+            color: #ffffff;
+        }
     }
     .shuxian {
       width: 4px;
@@ -1190,6 +1203,9 @@ this.Querymessage()
       background: url('~@/assets/imge/btn_sousuo.png');
       background-size: cover;
     }
+    .serch-one:hover{
+      color:#ccc;
+    }
   }
   .reserch {
     height: 20px;
@@ -1214,6 +1230,9 @@ this.Querymessage()
     height: 40px;
     width: 114px;
     line-height: 40px;
+  }
+  .right-logo:hover{
+      color:#ccc;
   }
 }
 .mai1 {
@@ -1241,6 +1260,9 @@ this.Querymessage()
         font-family: Microsoft YaHei;
         font-weight: 300;
         color: rgba(59, 59, 59, 1);
+      }
+      li:hover a{
+          color:#ff7b47;
       }
     }
   }
@@ -1302,7 +1324,8 @@ this.Querymessage()
               min-height: 559px;
               background: #363744;
               position: absolute;
-              z-index: 9999;
+              z-index: 9;
+// opacity:0.7;
               top: 0px;
               left: 260px;
               padding: 31px 69px 0px 66px;
@@ -1310,7 +1333,7 @@ this.Querymessage()
               .sideNav {
                 a {
                   margin-right: 36px;
-                  color: #ffffff;
+                  color: #ffffff !important;
                 }
               }
               dt {
@@ -1589,11 +1612,11 @@ this.Querymessage()
       }
     }
     .guarantee_one:hover {
-      box-shadow: 0 0 5px 1px #b0acac;
-      transform: translateY(-5px);
+      box-shadow: 0 0 1px 1px #b0acac;
+      transform: translateY(-3px);
     }
     .guarantee_one:hover .guarantee_four {
-      opacity: 1;
+      opacity: 0.5;
       visibility: visible;
     }
   }
@@ -1711,7 +1734,7 @@ this.Querymessage()
   }
 }
 .cooperative {
-  height: 230px;
+  height:100px;
   background: #f4f4f4;
   .advertising {
     padding-top: 90px;

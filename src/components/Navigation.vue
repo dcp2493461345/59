@@ -17,10 +17,9 @@
       </div>
       <div class="top-nav-menu">
         <ul v-show="!show">
-          <li>消息</li>
           <li @click="toroutr"
               class="showe">登录</li>
-          <li @click="registers">注册</li>
+          <li class="showess" @click="registers">注册</li>
         </ul>
         <ul v-show="show">
           <li class="tixingxiaoxi"
@@ -223,6 +222,12 @@ export default {
           background: url('~@/assets/imge/btn_wode denglu.png');
           background-size: 100% 100%;
           line-height: 40px;
+        }
+        .showe:hover {
+          color: #ff7b47;
+        }
+        .showess:hover{
+          color: #ff7b47;
         }
       }
     }

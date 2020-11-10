@@ -178,9 +178,12 @@
               <p class="adv13">擅长:{{item.describe}} </p>
               <div class="adv14">
                 <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
-                  <span style="margin-left:25px;"><a style="color:#fff;"
-                     target="_blank"
-                     href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a></span>
+                  <span style="margin-left:25px;">
+                    <a class="qqdianji"
+                       style="color:#fff;"
+                       target="_blank"
+                       href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a>
+                  </span>
                 </span>
                 <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" />
                   <span style="margin-left:28px;"
@@ -578,6 +581,9 @@ export default {
           // margin-top: 30px;
           cursor: pointer;
         }
+        li:hover {
+          color: #32afe9;
+        }
       }
       .towul {
         display: flex;
@@ -594,6 +600,9 @@ export default {
           cursor: pointer;
           text-align: center;
         }
+        li:hover {
+          color: #32afe9;
+        }
       }
       .navli {
         background: #32afe9;
@@ -601,6 +610,9 @@ export default {
         padding: 0 13px;
         border-radius: 5px;
         cursor: pointer;
+      }
+      .navli:hover {
+        color: #ffffff !important;
       }
       .nav010 {
         line-height: 30px;
@@ -611,6 +623,12 @@ export default {
         cursor: pointer;
         padding: 0 13px;
         border-radius: 5px;
+      }
+      .nav010:hover {
+        color: #32afe9;
+      }
+      .nav0101:hover {
+        color: #32afe9;
       }
       .nav0101 {
         line-height: 30px;
@@ -757,6 +775,10 @@ export default {
           border: 1px solid #32afe9;
           cursor: pointer;
         }
+        span:hover {
+          background: #32afe9;
+          color: #ffffff;
+        }
       }
       .adv2 {
         width: 240px;
@@ -849,6 +871,9 @@ export default {
           }
           .sp2:hover .sp5 {
             color: #ccc;
+          }
+          .qqdianji:hover {
+            color: #ccc !important;
           }
         }
       }

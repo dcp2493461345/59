@@ -14,19 +14,18 @@ export default {
   },
   created () {
     this.user = local.get('username')
-    this.Querymessage()
-    this.Querysupusers()
+    // this.Querymessage()
 
   },
   methods: {
-    async Querymessage () {
-      const data = await Querymessage({
-        userid: this.user.user_id,
-        status: 1,
-      })
-      this.total_count = data.total_count
-      this.$store.commit("setTotal", this.total_count);
-    },
+    // async Querymessage () {
+    //   const data = await Querymessage({
+    //     userid: this.user.user_id,
+    //     status: 1,
+    //   })
+    //   this.total_count = data.total_count
+    //   this.$store.commit("setTotal", this.total_count);
+    // },
     //查询经纪人
     async  Querysupusers () {
       const data = await Querysupuser({})
@@ -42,6 +41,8 @@ export default {
   //         }
   //     }
   mounted () {
+    this.Querysupusers()
+
     var storage = window.localStorage;
     let beginTime = 0; //开始时间
     let differTime = 0; //时间差

@@ -125,7 +125,7 @@ export default {
 
 <style lang="scss" >
 .floot {
-  height: 408px;
+  height: 380px;
   background: rgba(54, 55, 68, 1);
   padding-top: 30px;
   box-sizing: border-box;
@@ -153,7 +153,7 @@ export default {
           font-weight: 300;
           color: rgba(255, 255, 255, 1);
           margin-right: 60px;
-          margin-bottom: 30px;
+          margin-bottom: 22px;
         }
       }
     }
@@ -179,7 +179,7 @@ export default {
             font-family: Microsoft YaHei;
             font-weight: 300;
             color: rgba(255, 255, 255, 1);
-            line-height: 43px;
+            line-height: 38px;
           }
         }
       }
@@ -190,7 +190,7 @@ export default {
     }
   }
   .blogroll {
-    margin-top: 20px;
+    margin-top: 10px;
     height: 50px;
     background: rgba(76, 86, 207, 1);
     .blogroll_01 {

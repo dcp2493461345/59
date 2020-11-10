@@ -83,7 +83,8 @@
               <div class="adv14">
                 <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
                   <span style="margin-left:25px;">
-                    <a style="color:#fff;"
+                    <a class="qqdianji"
+                       style="color:#fff;"
                        target="_blank"
                        href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a>
                   </span>
@@ -217,6 +218,9 @@ export default {
         font-size: 16px;
         cursor: pointer;
       }
+      li:hover {
+        color: #32afe9;
+      }
     }
     .navli {
       background: #32afe9;
@@ -224,6 +228,9 @@ export default {
       padding: 0 13px;
       border-radius: 5px;
       cursor: pointer;
+    }
+    .navli:hover {
+      color: #ffffff !important;
     }
     .nav010 {
       line-height: 30px;
@@ -234,6 +241,12 @@ export default {
       padding: 0 13px;
       margin-top: 18px;
       border-radius: 5px;
+    }
+    .nav010:hover {
+      color: #32afe9;
+    }
+    .nav0101:hover {
+      color: #32afe9;
     }
     ul {
       display: flex;
@@ -441,6 +454,9 @@ export default {
               top: 10px;
               z-index: 99999999999999999;
             }
+          }
+          .qqdianji:hover {
+            color: #ccc !important;
           }
           .sp2 {
             display: inline-block;

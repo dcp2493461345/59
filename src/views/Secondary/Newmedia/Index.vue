@@ -125,7 +125,7 @@
               <span @click="daishouweituo1"
                     style="margin-left: 10px;cursor: pointer;">+代购委托</span>
             </div>
-               <div class="adv2"
+            <div class="adv2"
                  v-for="(item,index) in supser"
                  :key="index">
               <span class="adv10">
@@ -141,9 +141,12 @@
               <p class="adv13">擅长:{{item.describe}} </p>
               <div class="adv14">
                 <span class="sp1"><img src="@/assets/imge/ic_qqjiaotan.png" />
-                  <span style="margin-left:25px;"><a style="color:#fff;"
-                     target="_blank"
-                     href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a></span>
+                  <span style="margin-left:25px;">
+                    <a class="qqdianji"
+                       style="color:#fff;"
+                       target="_blank"
+                       href="http://wpa.qq.com/msgrd?v=1&uin=888888888&site=qq&menu=yes">交谈</a>
+                  </span>
                 </span>
                 <span class="sp2"><img src="@/assets/imge/ic_weixinjiaotan.png" />
                   <span style="margin-left:28px;"
@@ -281,7 +284,7 @@ export default {
     }
     this.getList()
     this.getproject()
-this.$store.state.supuser.forEach((v, i) => {
+    this.$store.state.supuser.forEach((v, i) => {
       if (i < 2) {
         this.supser.push(v)
       }
@@ -563,6 +566,9 @@ this.$store.state.supuser.forEach((v, i) => {
           margin-top: 18px;
           cursor: pointer;
         }
+        li:hover {
+          color: #32afe9;
+        }
       }
       .navli {
         background: #32afe9;
@@ -570,6 +576,15 @@ this.$store.state.supuser.forEach((v, i) => {
         padding: 0 13px;
         border-radius: 5px;
         cursor: pointer;
+      }
+      .nav010:hover {
+        color: #32afe9;
+      }
+      .nav0101:hover {
+        color: #32afe9;
+      }
+      .navli:hover {
+        color: #ffffff !important;
       }
       .towul {
         display: flex;
@@ -585,6 +600,9 @@ this.$store.state.supuser.forEach((v, i) => {
           min-width: 20px;
           cursor: pointer;
           text-align: center;
+        }
+        li:hover {
+          color: #32afe9;
         }
       }
       ul {
@@ -735,6 +753,10 @@ this.$store.state.supuser.forEach((v, i) => {
           border: 1px solid #32afe9;
           cursor: pointer;
         }
+        span:hover {
+          background: #32afe9;
+          color: #ffffff;
+        }
       }
       .adv2 {
         width: 240px;
@@ -793,6 +815,9 @@ this.$store.state.supuser.forEach((v, i) => {
               top: 10px;
               z-index: 99999999999999999;
             }
+          }
+          .qqdianji:hover {
+            color: #ccc !important;
           }
           .sp2 {
             display: inline-block;

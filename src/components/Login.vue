@@ -37,7 +37,8 @@
           </div>
           <div class="zhuceacount">
             <span class="acount_one">没有账号？</span>
-            <span class="acount_two">立即注册></span>
+            <span class="acount_two"
+                  @click="zhuchezhanghao">立即注册></span>
           </div>
         </div>
       </div>
@@ -67,6 +68,9 @@ export default {
     }
   },
   methods: {
+    zhuchezhanghao () {
+      this.$router.push("/register")
+    },
     async login () {
       if (!this.account) {
         this.show = true

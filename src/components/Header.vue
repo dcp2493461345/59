@@ -17,10 +17,10 @@
       </div>
       <div class="top-nav-menu">
         <ul v-show="!show">
-          <li>消息</li>
           <li @click="toroutr"
               class="showe">登录</li>
-          <li @click="registers">注册</li>
+          <li class="showees"
+              @click="registers">注册</li>
         </ul>
         <ul v-show="show">
           <li class="tixingxiaoxi"
@@ -186,6 +186,7 @@ export default {
         color: #fff;
         line-height: 39px;
       }
+
       input:focus,
       textarea:focus {
         outline: none;
@@ -230,6 +231,12 @@ export default {
           background-size: 100% 100%;
           line-height: 40px;
         }
+        .showe:hover {
+          color: #ff7b47;
+        }
+        .showees:hover {
+          color: #ff7b47;
+        }
       }
     }
   }
@@ -252,17 +259,17 @@ export default {
         li:hover a {
           color: #ff7348;
         }
-        li:hover::after {
-          transform: translateX(-50%);
-          height: 3px;
-          border-radius: 2px;
-          position: absolute;
-          bottom: -14px;
-          left: 50%;
-          content: '';
-          background-color: #ff7348;
-          width: 32px;
-        }
+        // li:hover::after {
+        //   transform: translateX(-50%);
+        //   height: 3px;
+        //   border-radius: 2px;
+        //   position: absolute;
+        //   bottom: -14px;
+        //   left: 50%;
+        //   content: '';
+        //   background-color: #32afe9;
+        //   width: 32px;
+        // }
         .active001 {
           a {
             color: #ff7348;
